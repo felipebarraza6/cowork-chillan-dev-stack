@@ -1,0 +1,9 @@
+
+.site-layout-content {
+    background: #1f1f1f;
+    min-height: 280px;
+  }
+ .logo {
+    width: 330px;        
+    float: left;
+  }
