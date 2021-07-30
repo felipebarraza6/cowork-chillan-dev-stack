@@ -1,7 +1,7 @@
 """Client views."""
 
 # Django REST Framework
-from rest_framework import mixins, status, viewsets
+from rest_framework import mixins, status, viewsets, pagination
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -34,6 +34,10 @@ class SignedUpViewSet(viewsets.GenericViewSet,
             permissions = [AllowAny]
         return [p() for p in permissions]
 
+    class CustomPagination(pagination.PageNumberPagination):
+        page_size = 1000
+        
+    pagination_class = CustomPagination
     queryset = SignedUp.objects.all()
     serializer_class = SignedUpModelSerializer
     filter_backends = (filters.DjangoFilterBackend,)
