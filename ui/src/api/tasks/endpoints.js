@@ -7,7 +7,7 @@ const postTask = async(data)=> {
 }
 
 
-const getTasks = async({page, user, operator}) => {
+const getTasks = async(page, user, operator) => {
     const request = await GET(`tasks_users/?page=${page}&user=${user}&operator=${operator}/`)
     return request
 }

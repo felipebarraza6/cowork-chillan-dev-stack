@@ -9,6 +9,7 @@ import Services from '../components/Services'
 import Contact from '../components/Contact'
 import Collaborators from '../components/Collaborators'
 import FooterInfo from '../components/FooterInfo'
+import Inscribed from '../components/Inscribed'
 import { BrowserRouter } from 'react-router-dom'
 
 const { Header, Content, Footer } = Layout
@@ -68,6 +69,9 @@ const Home = () => {
                 </Col>
                 <Col span={24} id="contact">
                     <Contact />
+                </Col>
+                <Col span={24} id='inscribed' >
+                    <Inscribed />
                 </Col>
             </Row>
             

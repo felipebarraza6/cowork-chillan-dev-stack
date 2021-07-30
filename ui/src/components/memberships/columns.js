@@ -8,8 +8,11 @@ import RenovationMembership from './RenovationMembership'
 const { Paragraph, Text } = Typography
 const { TextArea } = Input
 const user = JSON.parse(localStorage.getItem('user') || null)
-const type_user = user.type_user
+var type_user = ''
 
+if(user){
+    type_user = user.type_user
+}
 
 const ButtonUpdate = (obj) => {
 

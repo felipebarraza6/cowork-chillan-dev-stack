@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 from crm.bookings.models import Book, Calendar, Task
 
 class BookModelSerializer(serializers.ModelSerializer):

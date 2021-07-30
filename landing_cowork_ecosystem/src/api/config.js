@@ -14,3 +14,7 @@ export const POST = async(endpoints, data) => {
     return request
 }
 
+export const GET = async(endpoints) => { 
+    const request = await INSTANCE.get(endpoints)
+    return request
+}

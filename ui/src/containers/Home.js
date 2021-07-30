@@ -27,10 +27,13 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 
 const { Header, Content, Footer } = Layout
 const user = JSON.parse(localStorage.getItem('user') || null)
-const type_user = user.type_user
+var type_user = null
 
 const Home = () => {
 
+    if(user){
+        type_user = user.type_user
+    }
 
     const Breadcrumbs = () => <Route path="*" render={props => {
         let parts = props.location.pathname.split("/");
