@@ -1,15 +1,13 @@
 """Clients serializers."""
 
 # Django
-from django.conf import settings
 from django.core.validators import RegexValidator
+from django.conf import settings
 
 # Django Rest Framework
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.core.mail import send_mail
-
-
 
 # Serializers
 from crm.clients.serializers.business import BusinessModelSerializer
@@ -25,9 +23,9 @@ class SignedUpModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def validate(self, validated_data):
-        #send_mail('Pensando en nuestro ecosistema de emprendimiento ',
-        #    ('¡Hola! {}, tu inscripcion fue realizada exitosamente!').
-        #        format(validated_data['name']), settings.DEFAULT_FROM_EMAIL, [validated_data['email']])
+        send_mail('Pensando en nuestro ecosistema de emprendimiento ',
+            ('¡Hola! {}, tu inscripcion fue realizada exitosamente!').
+                format(validated_data['name']), settings.DEFAULT_FROM_EMAIL, [validated_data['email']])
         return validated_data
     
 class ReportLegalRepresentSrializer(serializers.ModelSerializer):
@@ -51,7 +49,6 @@ class ReportLegalRepresentSrializer(serializers.ModelSerializer):
 
 
 class ReportNaturalPersonSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = Client
