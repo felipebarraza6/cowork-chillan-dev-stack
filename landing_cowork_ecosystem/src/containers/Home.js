@@ -45,7 +45,7 @@ const Home = () => {
                 </Col>
                 {width > 800 && <>
                 <Col>
-                    <Title style={styles.title} level={5}>EVENTO 6 y 9 de septiembre</Title>
+                    <Title style={styles.title} level={5}>6 y 9 de septiembre a las 18:30 hrs</Title>
                 </Col>
                 <Col offset={6}> 
                     <HeaderMenu is_mobile={is_mobile} />

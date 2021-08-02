@@ -11,7 +11,8 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
 
     const initialState = {
         is_select_ocupation: false,
-        string_ocupation: ''
+        string_ocupation: '',
+        gender_other: false
     }
 
     const [form] = Form.useForm()
@@ -104,10 +105,26 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                            {state.gender_other ? <Form.Item name='gender' label={<Text style={styles.text}>Genero</Text>} style={{color:'white'}}>
+                                <Input placeholder='Escribe tu genero' />
+                            </Form.Item>: 
                             <Form.Item name='gender'
-                                style={{color:'white'}} label={<Text style={styles.text}>Genero</Text>} >
-                                <Input placeholder='Escribe tu genero(opcional)' />
-                            </Form.Item>
+                                style={{color:'white'}} label={<Text style={styles.text}>Genero</Text>} >                                
+                                <Select placeholder='Selecciona una opcion...' 
+                                    onChange={(value)=>{
+                                        if(value==='otro'){
+                                            setState({
+                                                ...state,
+                                                gender_other: true
+                                            })
+                                        }
+                                    }}>
+                                    <Option value='hombre'>Hombre</Option>
+                                    <Option value='mujer'>Mujer</Option>
+                                    <Option value='otro'>Otro</Option>                                
+                                </Select>
+                            </Form.Item>}
+
                         </Col>
                         
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>

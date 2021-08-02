@@ -15,10 +15,10 @@ const Services = () => {
                 <Title>Juntos por el ecosistema de emprendimiento</Title>
             </Col>
             <Col style={styles.col} col={6}>
-                <Card style={styles.card1} hoverable>
+                <Card style={styles.card} hoverable>
                     <p>¿Cuándo?</p>
                     <CalendarOutlined style={styles.icon} />
-                    <p>6 y 9 de Septiembre 2021</p>
+                    <p>6 y 9 de Septiembre 2021 a las 18:30 hrs</p>
                 </Card>
             </Col>
             <Col style={styles.col} col={6}>
