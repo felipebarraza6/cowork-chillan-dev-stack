@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table, Typography } from 'antd'
 import { getIncidences } from '../../actions/incidences/ActionInsdicences'
+import {AuthContext} from '../../App'
 const { Title, Text }  = Typography
 
 const ListIncidences = () => {
 
+    const { state:userContext } = useContext(AuthContext)
+
     const initialState = {
         page: 1,
-        user: '',
-        current: '',
-        tasks: null
+        user: userContext.user.id,
+        operator: '',
+        tasks: []
     }
 
     const [state, setState] = useState(initialState)
     console.log(state)
+
+    const columns = [
+        {
+            title: 'Nota',
+            dataIndex: 'message',
+            key: 'message',
+          },
+    ]
 
     useEffect(() =>{
         async function GetInsidences(){
@@ -27,7 +38,7 @@ const ListIncidences = () => {
     }, [])
 
     return(<>
-        <Table title={()=><Title level={4}>Tus insidencias</Title>}></Table>
+        <Table columns={columns} dataSource={state.tasks} title={()=><Title level={4}>Tus insidencias</Title>}></Table>
     </>)
 
 }

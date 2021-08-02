@@ -41,8 +41,6 @@ const CreateMemberships = () => {
     
     const [state, dispatch] = useReducer(reducer, initialReducerState)
     
-    console.log(state)
-
     return(<div style={styles.contain}>
         <CreateContext.Provider value={{
             state, 
