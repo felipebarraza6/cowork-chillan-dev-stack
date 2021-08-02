@@ -38,4 +38,13 @@ services:
     #        - django
     #        - postgres
 
+    #react2:
+    #    build: ./landing_cowork_ecosystem
+    #    image: landing_cowork_ecosystem
+    #    ports:
+    #        - "80:80"
+    #    depends_on:
+    #        - django
+    #    
+
 
