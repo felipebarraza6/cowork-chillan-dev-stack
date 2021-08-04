@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, Button, Descriptions,
-        Input, DatePicker, notification} from 'antd'
+        Input, DatePicker, notification,
+        Form } from 'antd'
 import moment from 'moment'
 import membership from '../../api/memberships/endpoints'
 const { TextArea } = Input
@@ -59,6 +60,8 @@ const RenovationMembership = ({ data, style }) => {
                         notification.success({message: 'MEMBRESIA RENOVADA'})
                         setVisible(false)
                     })
+                return request
+
             }}
             style={styles.modal}>
             <Descriptions bordered style={styles.date}>

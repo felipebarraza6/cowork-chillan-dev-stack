@@ -5,7 +5,7 @@ from rest_framework.permissions import (
     IsAuthenticated
 )
 
-from crm.users.serializers import TaskModelSerializer
+from crm.users.serializers import TaskModelSerializer, TaskListSerializer
 from crm.users.models import Task
 from django_filters import rest_framework as filters
 
@@ -30,5 +30,10 @@ class TaskViewSet(viewsets.GenericViewSet,
             
     filterset_class = TaskFilter
     queryset = Task.objects.all()
-    serializer_class = TaskModelSerializer
     lookup_field = 'id'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskListSerializer
+        else:
+            return TaskModelSerializer

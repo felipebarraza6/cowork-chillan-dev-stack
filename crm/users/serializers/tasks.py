@@ -5,6 +5,12 @@ from crm.users.serializers.users import UserModelSerializer
 
 class TaskModelSerializer(serializers.ModelSerializer):
     
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+
+class TaskListSerializer(serializers.ModelSerializer):
     operator = UserModelSerializer()
     user = UserModelSerializer()
     

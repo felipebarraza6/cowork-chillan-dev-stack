@@ -37,10 +37,6 @@ class PaymentViewSet(viewsets.GenericViewSet,
 
     permission_classes = [IsAuthenticated]
 
-    class CustomPagination(pagination.PageNumberPagination):
-        page_size = 10000
-
-    pagination_class = CustomPagination
     queryset = Payment.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     lookup_field = 'id'
