@@ -6,7 +6,7 @@ import ListIncidences from '../components/incidences/ListIncidences'
 const Incidences = () => {
 
     return(<Row>
-        <Col spa={24}>            
+        <Col span={24}>            
             <ListIncidences />
         </Col>
     </Row>)

@@ -20,6 +20,7 @@ import Clients from './../components/clients/Clients'
 import Services from './Services'
 import Memberships from './Memberships'
 import Incidences from './Incidences'
+import Payments from './Payments'
 
 
 //React Router
@@ -111,7 +112,7 @@ const Home = () => {
                     <Route exact path='/services' component={Services} />
                     <Route exact path='/memberships' component={Memberships} />
                     <Route exact path='/bookings' component={()=>'reservas'} />
-                    <Route exact path='/payments' component={()=>'pagos'} />
+                    <Route exact path='/payments' component={Payments} />
                     <Route exact path='/incidences' component={Incidences} />
                  </Switch>
                 </div>                

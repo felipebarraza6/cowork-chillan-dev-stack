@@ -1,4 +1,4 @@
-import { POST, GET } from '../api'
+import { POST, GET, PATCH } from '../api'
 
 
 const postTask = async(data)=> {
@@ -12,9 +12,15 @@ const getTasks = async(page, user) => {
     return request
 }
 
+const updateTask = async(task, data) => {
+    const request = await PATCH(`tasks_users/${task}/`, data)
+    return request
+}
+
 const tasks = {
     postTaks: postTask,
-    listTasks: getTasks
+    listTasks: getTasks,
+    patchTask: updateTask
 }
 
 
