@@ -12,33 +12,30 @@ const About = () => {
             </Col>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.colPara}>
                 <Paragraph style={styles.paragraph} align='justify'>
-                <Text strong>
-                Evento de carácter participativo abierto a todos los ciudadanos de la región de Ñuble 
-                cuyo principal objetivo es sentar las bases del futuro Ecosistema de Emprendimiento de 
-                la región de Ñuble. Esto permitirá a todos los actores regionales participar en la reflexión 
-                sobre las características que debería tener, el rol que deberían asumir en el ecosistema de 
-                emprendimiento y las oportunidades que hay. Este evento se llevara acabo en dos jornadas 
-                de trabajo virtual. 
+                <Text>
+                <Text strong>CREEMOS ÑUBLE</Text>, es el primer evento de carácter virtual, participativo y abierto a todos los ciudadanos de la región de Ñuble, 
+                cuyo principal objetivo <Text strong>crear las bases para nuestro Ecosistema de Emprendimiento</Text>. Inscríbete y participa de una <Text strong>metodología 
+                participativa</Text>, generaremos un <Text strong>espacio de reflexión</Text> sobre las características que éste debería tener, el rol que deberían asumir 
+                en el ecosistema de emprendimiento y las oportunidades que existen y las que debemos propiciar.
                 </Text>
 
                 </Paragraph>
             </Col>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.colPara}>
                 <Paragraph style={styles.paragraph} >
-                    <Text strong>                        
+                    <Text>                        
                     Estamos viviendo tiempos trascendentales… 
                     </Text>
                 </Paragraph>
                 <Paragraph style={styles.paragraph} align='justify'>
-                    <Text strong>
-                    Recién saliendo de una terrible pandemia, viviendo transformaciones sociales, redactando una 
-                    nueva constitución, eligiendo a nuestros gobernadores regionales. Y además estamos cerca de la 
-                    celebración de un nuevo aniversario de nuestro reconocimiento como región.
+                    <Text>
+                    Ya han transcurrido casi dos años desde que la pandemia se instaló, y la sociedad chilena está viviendo <Text strong>transformaciones importantes</Text>, 
+                    redactando una nueva constitución y por cierto, eligiendo a sus nuevos gobernantes. 
                     </Text>
                 </Paragraph>
                 <Paragraph style={styles.paragraph}>
-                    <Text strong>
-                    …Acompáñanos  creer y crear nuestro Ñuble
+                    <Text>
+                    Es <Text strong>EL MOMENTO</Text> de realizar esta reflexión…Acompáñanos a creer y crear nuestro Ñuble.
                     </Text>
                 </Paragraph>
                 <Paragraph style={styles.paragraph}>
@@ -50,7 +47,7 @@ const About = () => {
             <Col span={24}>
                 <Paragraph style={styles.dates}>
                     <Text style={styles.textDates} strong>
-                    6 y 9 de septiembre a las 18:00 hrs
+                    6 y 9 de septiembre a las 18:30 hrs
                     </Text>
                 </Paragraph>
             </Col>

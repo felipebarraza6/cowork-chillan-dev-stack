@@ -14,14 +14,39 @@ const ListPayments = ({type_data}) => {
 
     const [local, setLocal] = useState(initialState)
 
-    const getPayments = () => {
+    const getPayments = async() => {
         try {
-            const request = ListPaymentsAction(local.is_speding)
+            const request = await ListPaymentsAction(local.is_speding)
+            
+            setLocal({
+                ...local,
+                payments: request.data.results
+            })
             return request
         } catch (err) {
             console.log(err)
         }
     }
+
+    console.log(local)
+
+    const columns = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Age',
+          dataIndex: 'age',
+          key: 'age',
+        },
+        {
+          title: 'Address',
+          dataIndex: 'address',
+          key: 'address',
+        },
+      ]
 
     useEffect(() => {
         getPayments()

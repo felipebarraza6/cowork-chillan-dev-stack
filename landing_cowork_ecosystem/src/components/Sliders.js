@@ -21,13 +21,13 @@ const Sliders = ({is_mobile}) => {
                     backgroundImage: `url(${Slide1})`,
                     backgroundPosition: 'center',
                     backgroundSize: '100% auto',
-                    height: '500px',
+                    height: '540px',
                     backgroundRepeat: 'no-repeat',
                     width: '100%'
                     }}>
-                        <Row>
-                            {viewForm && 
-                            <Col offset={13} style={styles.col}>
+                        {viewForm && 
+                        <Row>                            
+                            <Col offset={8} style={styles.col}>
                                 <Affix offsetTop={50}>
                                 <Card style={styles.card}>
                                     <Row>
@@ -40,16 +40,47 @@ const Sliders = ({is_mobile}) => {
                                             </Button>
                                         </Col>
                                         <Col span={24}>
-                                            <FormSuscription closeAffix={setViewForm} is_affix={true} />
+                                            <FormSuscription closeAffix={setViewForm} is_affix={true} in_affix={true} />
                                         </Col>
                                     </Row>
                                 </Card>
                                 </Affix>
-                            </Col>}
-                        </Row>
+                            </Col>
+                        </Row>}
                     </div> :
                     <>
-                        <img style={styles.slide} src={Slide2} alt='slide1' />
+                        <div style={{  
+                    backgroundImage: `url(${Slide2})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: '100% auto',
+                    height: '450px',
+                    backgroundRepeat: 'no-repeat',
+                    width: '100%',
+                    WebkitBackgroundSize: 'cover',
+                    }}>
+                        {viewForm && 
+                        <Row>                             
+                            <Col style={styles.col}>
+                                
+                                <Card style={styles.card2}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Title level={3} style={styles.title}>Participar</Title>                                            
+                                        </Col>
+                                        <Col span={12} style={{textAlign: 'end'}}>
+                                            <Button type='link' onClick={()=>setViewForm(false)}>
+                                                <CloseCircleOutlined style={styles.close} />
+                                            </Button>
+                                        </Col>
+                                        <Col span={24}>
+                                            <FormSuscription closeAffix={setViewForm} is_affix={true} in_affix={true} />
+                                        </Col>
+                                    </Row>
+                                </Card>
+                              
+                            </Col>
+                        </Row>}
+                    </div>                         
                     </>
                 }
             </>                    
@@ -63,14 +94,24 @@ const styles = {
         color: 'white',
     },
     col: {
-        paddingTop:'10px'
+        paddingTop:'0px'
     },
     card: {
-        width: '600px',
+        width: '900px',
         backgroundColor: '#3D276C',
         borderColor: '#3D276C',
         borderRadius: '20px',
         color: 'white',
+        marginTop: '10px',
+        zIndex: '1'
+    },
+    card2: {
+        width: '100% auto',
+        backgroundColor: '#3D276C',
+        borderColor: '#3D276C',
+        borderRadius: '20px',
+        color: 'white',
+        marginTop:'10px',
         zIndex: '1'
     },
     slide: {

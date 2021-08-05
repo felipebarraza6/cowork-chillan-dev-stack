@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import HeaderMenu from '../components/HeaderMenu'
 import { Layout, Col, Row, 
-        Affix, Typography, Modal} from 'antd'
+        Affix, Typography } from 'antd'
 import logo_src from '../assets/images/logo.png'
+import logo_movil_src from '../assets/images/logo_movil.png'
 import Sliders from '../components/Sliders'
 import About from '../components/About'
 import Services from '../components/Services'
@@ -36,20 +37,20 @@ const Home = () => {
         <BrowserRouter>
         
         <Affix offset={'20px'}>
-        <Header style={styles.header}>
-            <Row>
+        <Header style={styles.header}>            
+            <Row>                
+                {width > 800 ? <>
                 <Col>
-                    <div>
-                        <img src={logo_src} alt='logo' style={styles.logo} />
-                    </div>
+                    <img src={logo_src} alt='logo' style={styles.logo} />
                 </Col>
-                {width > 800 && <>
                 <Col>
                     <Title style={styles.title} level={5}>6 y 9 de septiembre a las 18:30 hrs</Title>
                 </Col>
-                <Col offset={6}> 
+                <Col offset={4}> 
                     <HeaderMenu is_mobile={is_mobile} />
-                </Col></>}
+                </Col></>: <Col style={styles.colLogoMobil} span={24}>
+                    <img src={logo_movil_src} alt='logo' style={styles.logo} />
+                </Col>}
             </Row>
         </Header>
         </Affix>
@@ -91,6 +92,9 @@ const styles = {
     },
     logo: {
         width: '200px',
+    },
+    colLogoMobil: {
+        textAlign: 'center',
     },
     title: {
         color:'white', 

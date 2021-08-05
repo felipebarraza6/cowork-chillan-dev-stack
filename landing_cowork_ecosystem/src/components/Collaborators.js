@@ -16,29 +16,29 @@ const Collaborators = () => {
                 <Title level={1} style={styles.title}>Colaboradores</Title>
             </Col>
             <Col xs={24} sm={12} md={12} lg={8} xl={8} style={styles.colImg}>
-                <Button type='link' onClick={()=>window.open('https://coworkchillan.cl')}>
+                <a noreferrer={true} href={'https://coworkchillan.cl'} target='__blank'>
                     <img src={logo_cowork} style={styles.logo_cowork} alt='logo_cowork' />
-                </Button>
+                </a>
             </Col>
-            <Col xs={24} sm={12} md={12} lg={8} xl={8} style={styles.colImg}>
-                <Button type='link' onClick={()=>window.open('https://www.corfo.cl/sites/cpp/homecorfo')}>
+            <Col xs={24} sm={12} md={12} lg={8} xl={8} style={styles.colImg}>                
+                <a noreferrer={true} href={'https://www.corfo.cl/sites/cpp/homecorfo'} target='__blank'>
                     <img src={logo_corfo} style={styles.logo} alt='logo_corfo' />
-                </Button>
+                </a>                
             </Col>
-            <Col xs={24} sm={12} md={12} lg={8} xl={8} style={styles.colImg}>
-                <Button type='link' onClick={()=>window.open('https://mentorinn.cl')}>
+            <Col xs={24} sm={12} md={12} lg={8} xl={8} style={styles.colImg}>                
+                <a noreferrer={true} href={'https://mentorinn.cl'} target='__blank'>
                     <img src={logo_mentorinn} style={styles.logo_mentorinn} alt='logo_mentorinn' />
-                </Button>
+                </a>                
             </Col>      
-            <Col xs={24} sm={12} md={6} lg={6} xl={6} style={styles.colImg}>
-                <Button type='link' onClick={()=>window.open('https://ciderebiobio.cl')}>
+            <Col xs={24} sm={12} md={6} lg={6} xl={6} style={styles.colImg}>                
+                <a noreferrer={true} href={'https://ciderebiobio.cl'} target='__blank'>
                     <img src={logo_cidere} style={styles.logo_cidere} alt='logo_cidere' />
-                </Button>
+                </a>
             </Col>
-            <Col xs={24} sm={12} md={6} lg={6} xl={6} style={styles.colImg}>
-                <Button type='link' onClick={()=>window.open('https://www.sercotec.cl/centros-de-negocios/centro-de-desarrollo-de-negocios-chillan/')}>
+            <Col xs={24} sm={12} md={6} lg={6} xl={6} style={styles.colImg}>                
+                <a noreferrer={true} href={'https://www.sercotec.cl/centros-de-negocios/centro-de-desarrollo-de-negocios-chillan/'} target='__blank'>
                     <img src={logo_cdn} style={styles.logo_cdn} alt='logo_cdn' />
-                </Button>
+                </a>
             </Col>      
         </Row>
         
@@ -50,15 +50,11 @@ const Collaborators = () => {
 
 const styles = {
     container: {
-        margin: '30px',
-        padding:'20px'
-    },
-    container2: {
-        margin: '30px', 
-        padding:'20px'
+        marginTop: '15px',
+        marginBottom: '40px'        
     },
     colTitle: {
-        marginBottom:'0px'
+        marginBottom:'3px'
     },
     logo: {
         width: '200px'
@@ -67,7 +63,7 @@ const styles = {
         width: '300px'
     },
     logo_cowork: {
-        width: '300px'
+        width: '300px',        
     },
     logo_cidere: {
         width: '150px',
@@ -80,13 +76,12 @@ const styles = {
     },
     title: {
         textAlign: 'center',
-        margin: '20px',
+        marginTop:'40px',
         marginBottom: '20px'
     },
     colImg: {
         textAlign: 'center',
-        padding: '30px'
-
+        marginTop:'20px', marginBottom:'20px'   
     }
 }
 

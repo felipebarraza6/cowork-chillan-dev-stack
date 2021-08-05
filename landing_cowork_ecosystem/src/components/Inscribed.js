@@ -29,7 +29,7 @@ const Inscribed = () => {
           key: 'name',
         },        
         {
-          title: 'Organizacion',
+          title: 'Organización',
           dataIndex: 'enterprise',
           key: 'enterprise',
         },

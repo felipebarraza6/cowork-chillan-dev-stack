@@ -15,20 +15,20 @@ const FooterInfo = () => {
         <Col xs={24} sm={12} md={6} lg={6} xl={6} style={{paddingLeft:'20px',paddingRight:'20px', paddingBottom:'20px'}}>
             <Title level={4} style={{marginBottom: '20px', textAlign: 'center'}}>Redes Sociales</Title>
             <Row>
-                <Col span={8} style={{textAlign: 'center'}}>
-                    <Button type='link' onClick={()=> window.open('https://www.facebook.com/CoworkChillan/')}>
+                <Col span={8} style={{textAlign: 'center'}}>                    
+                    <a noreferrer={true} href={'https://www.facebook.com/CoworkChillan/'} target='__blank'>
                         <FacebookOutlined style={{fontSize:'30px', color: '#3b5998'}} />
-                    </Button>
+                    </a>                    
                 </Col>
-                <Col span={8} style={{textAlign: 'center'}}>
-                    <Button type='link' onClick={()=> window.open('https://www.instagram.com/coworkchillan/?hl=es')}>
+                <Col span={8} style={{textAlign: 'center'}}>                    
+                    <a noreferrer={true} href={'https://www.instagram.com/coworkchillan/?hl=es'} target='__blank'>
                         <InstagramOutlined style={{fontSize:'30px', color: '#3f729b'}} />
-                    </Button>
+                    </a>
                 </Col>
-                <Col span={8} style={{textAlign: 'center'}}>
-                    <Button type='link' onClick={()=> window.open('https://twitter.com/coworkchillan?lang=es')}>                
+                <Col span={8} style={{textAlign: 'center'}}>                    
+                    <a noreferrer={true} href={'https://twitter.com/coworkchillan?lang=es'} target='__blank'> 
                         <TwitterOutlined style={{fontSize:'30px', color: '#00acee'}} />
-                    </Button>
+                    </a>
                 </Col>
             </Row>
         </Col>

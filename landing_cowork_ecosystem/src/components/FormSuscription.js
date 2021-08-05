@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Typography, Select,
         notification, Row, Col, 
         Input, Button, } from 'antd'
@@ -7,7 +7,7 @@ import { callbacks } from '../api/endpoints'
 const { Title, Text } = Typography
 const { Option } = Select
 
-const FormSuscription = ({ closeAffix, is_affix }) => {
+const FormSuscription = ({ closeAffix, is_affix, in_affix }) => {
 
     const initialState = {
         is_select_ocupation: false,
@@ -15,9 +15,18 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
         gender_other: false
     }
 
+    const initialResponsive = {
+        xs: 24, 
+        sm: 12, 
+        md: 12, 
+        lg: 12, 
+        xl: 12
+    }
+
     const [form] = Form.useForm()
 
     const [state, setState] = useState(initialState)
+    const [response, setResponse] = useState(initialResponsive)
 
     const onFinish = async(values) => {
         console.log(values)
@@ -39,25 +48,35 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
         form.resetFields()
         notification.warning({message:'Formulario reiniciado'})
     }
+
+    useEffect(() => {
+        if(in_affix){
+            setResponse({
+                ...response,                                
+                lg: 6, 
+                xl: 6 
+            })
+        }
+    }, [])
     
     return(<>        
                 <Form form={form} style={styles.form} layout={'vertical'} onFinish={onFinish}>
                     <Row>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             <Form.Item name='name'
                                 rules={[{ required: true, message: 'Ingresa tu nombre completo' }]} 
                                 style={{color:'white'}} label={<Text style={styles.text}>Nombre completo</Text>}>
                                 <Input placeholder='Escribe tu nombre completo' />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl}style={styles.col}>
                             <Form.Item name='phone' 
                                 rules={[{ required: true, message: 'Ingresa tu telefono'  }]} 
-                                style={{color:'white'}} label={<Text style={styles.text}>Telefono</Text>} >
+                                style={{color:'white'}} label={<Text style={styles.text}>Teléfono</Text>} >
                                 <Input placeholder='Escribe tu telefono de contacto' />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             <Form.Item name='email' 
                                 rules={[
                                     {
@@ -72,39 +91,42 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
                                 <Input placeholder='Escribe tu correo electronico' />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             <Form.Item name='commune'
                                 rules={[{ required: true, message: 'Selecciona tu comuna' }]} 
                                 style={{color:'white'}} label={<Text style={styles.text}>Comuna</Text>}>                        
-                                <Select placeholder='Selecciona una opcion...'>
-                                    <Option value='Bulnes'>Bulnes</Option>
+                                <Select placeholder='Selecciona una opcion...'>                                
                                     <Option value='Chillán'>Chillán</Option>
-                                    <Option value='Chillán Viejo'>Chillán Viejo</Option>
-                                    <Option value='Cobquecura'>Cobquecura</Option>
-                                    <Option value='Coelemu'>Coelemu</Option>
-                                    <Option value='Coihueco'>Coihueco</Option>
+                                    <Option value='Bulnes'>Bulnes</Option>
+                                    <Option value='Chillan Viejo<'>Chillán Viejo</Option>
                                     <Option value='El Carmen'>El Carmen</Option>
-                                    <Option value='Ninhue'>Ninhue</Option>
-                                    <Option value='Ñiquén'>Ñiquén</Option>
                                     <Option value='Pemuco'>Pemuco</Option>
                                     <Option value='Pinto'>Pinto</Option>
-                                    <Option value='Portezuelo'>Portezuelo</Option>
-                                    <Option value='Quillón'>Quillón</Option>
-                                    <Option value='Quirihue'>Quirihue</Option>
-                                    <Option value='Ránquil'>Ránquil</Option>
-                                    <Option value='San Carlos'>San Carlos</Option>
-                                    <Option value='San Fabián'>San Fabián</Option>
+                                    <Option value='Quillon'>Quillón</Option>
                                     <Option value='San Ignacio'>San Ignacio</Option>
+                                    <Option value='Yungay'>Yungay</Option>
+                                    <Option value='San Carlos'>San Carlos</Option>
+                                    <Option value='Coihueco'>Coihueco</Option>
+                                    <Option value='Niquen'>Ñiquén</Option>
+                                    <Option value='San Fabian'>San Fabián</Option>
+                                    <Option value='San Nicolas'>San Nicolás</Option>
+                                    <Option value='Quirihue'>Quirihue</Option>
+                                    <Option value='Cobquecura'>Cobquecura</Option>
+                                    <Option value='Coelemu'>Coelemu</Option>
+                                    <Option value='Ninhue'>Ninhue</Option>
+                                    <Option value='Portezuelo'>Portezuelo</Option>
+                                    <Option value='Ranquil'>Ránquil</Option>
+                                    <Option value='Treguaco'>Treguaco</Option>
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             <Form.Item name='age'
                                 style={{color:'white'}} label={<Text style={styles.text}>Edad</Text>} >
                                 <Input type='number' placeholder='Escribe tu edad(opcional)' />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             {state.gender_other ? <Form.Item name='gender' label={<Text style={styles.text}>Genero</Text>} style={{color:'white'}}>
                                 <Input placeholder='Escribe tu genero' />
                             </Form.Item>: 
@@ -127,10 +149,10 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
 
                         </Col>
                         
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col}>
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col}>
                             <Form.Item name='participation'
                                 rules={[{ required: true, message: 'Selecciona tu participacion' }]} 
-                                style={{color:'white'}} label={<Text style={styles.text}>Participacion</Text>}>                        
+                                style={{color:'white'}} label={<Text style={styles.text}>Participación</Text>}>                        
                                 <Select placeholder='Selecciona una opcion...'>
                                     <Option value='Primera jornada(6 de septiembre)'>Primera jornada(6 de septiembre)</Option>
                                     <Option value='Segunda jornada(9 de Septiembre)'>Segunda jornada(9 de Septiembre)</Option>
@@ -138,10 +160,10 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
                                 </Select>
                             </Form.Item>
                         </Col>                        
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col} > 
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col} > 
                             <Form.Item name='ocupation'
                                 rules={[{ required: true, message: 'Selecciona tu ocupacion' }]} 
-                                style={{color:'white'}} label={<Text style={styles.text}>Ocupacion</Text>}>                        
+                                style={{color:'white'}} label={<Text style={styles.text}>Ocupación</Text>}>                        
                                 <Select placeholder="Seleccionar una opcion..." onChange={(e)=> {                                    
                                     setState({
                                         ...state,
@@ -162,14 +184,14 @@ const FormSuscription = ({ closeAffix, is_affix }) => {
                         <Col span={24} style={styles.col}>
                             <Title level={4} style={styles.text}>COMPLETAR</Title>
                         </Col>                   
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col} > 
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col} > 
                             <Form.Item name='enterprise' 
                                 rules={[{ required: true, message: 'Ingresa tu organizacion/empresa' }]} 
                                 style={{color:'white'}} label={<Text style={styles.text}>Organización/Empresa</Text>}>                        
                                 <Input placeholder='Escribe tu organización / empresa' />   
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={styles.col} > 
+                        <Col xs={response.xs} sm={response.sm} md={response.md} lg={response.lg} xl={response.xl} style={styles.col} > 
                             <Form.Item name='turn'
                                 rules={[{ required: true, message: 'Ingresa tu giro/actividad' }]}  
                                 style={{color:'white'}} label={<Text style={styles.text}>Giro/Actividad</Text>}>                        

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Typography } from 'antd'
 import ListPayments from '../components/payments/ListPayments'
-const { Title, Text } = Typography
+const { Title } = Typography
 
 
 const Payments = () => {
