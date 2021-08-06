@@ -40,15 +40,16 @@ const Home = () => {
         <Header style={styles.header}>            
             <Row>                
                 {width > 800 ? <>
-                <Col>
+                <Col span={4}>
                     <img src={logo_src} alt='logo' style={styles.logo} />
                 </Col>
-                <Col>
+                <Col span={12}>
                     <Title style={styles.title} level={5}>6 y 9 de septiembre a las 18:30 hrs</Title>
-                </Col>
-                <Col offset={4}> 
+                </Col>                
+                <Col span={8}> 
                     <HeaderMenu is_mobile={is_mobile} />
-                </Col></>: <Col style={styles.colLogoMobil} span={24}>
+                </Col>                
+                </>: <Col style={styles.colLogoMobil} span={24}>
                     <img src={logo_movil_src} alt='logo' style={styles.logo} />
                 </Col>}
             </Row>

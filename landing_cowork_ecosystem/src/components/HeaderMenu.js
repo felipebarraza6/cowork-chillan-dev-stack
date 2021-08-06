@@ -35,7 +35,7 @@ const styles = {
     col: {
         color:'white',
         marginLeft:'20px', 
-        paddingRight:'20x'
+        paddingRight:'20x'        
     },
     btn: {
         color:'white'
