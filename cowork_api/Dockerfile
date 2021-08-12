@@ -1,5 +1,5 @@
 # Base image.
-FROM python:3.8.1
+FROM python:3
 
 RUN mkdir /code
 # Set working dir.
@@ -24,4 +24,4 @@ RUN ln -s /code/conf/nginx-app.conf /etc/nginx/sites-enabled/
 ADD . /code/
 
 # Run script file.
-CMD ./run.sh
+CMD ./run-production.sh
