@@ -24,4 +24,4 @@ RUN ln -s /code/conf/nginx-app.conf /etc/nginx/sites-enabled/
 ADD . /code/
 
 # Run script file.
-CMD ./run-production.sh
+CMD ./run.sh

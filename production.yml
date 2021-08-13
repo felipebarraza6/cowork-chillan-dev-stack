@@ -48,7 +48,7 @@ services:
           - nginx_proxy
     
 
-    django: &django
+    django:
         build: ./cowork_api
         image: cowork_django
         depends_on:
