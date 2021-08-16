@@ -22,9 +22,9 @@ class SignedUpModelSerializer(serializers.ModelSerializer):
         model = SignedUp
         fields = '__all__'
     
-    def validate(self, validated_data):
+    def validate(self, validated_data):        
         send_mail('Pensando en nuestro ecosistema de emprendimiento ',
-            ('¡Hola! {}, tu inscripcion fue realizada exitosamente!').
+            ('Hola!! {}, Ya estás inscrito en nuestro evento virtual CREEMOS ÑUBLE, es el primer evento de carácter virtual, participativo y abierto a todos los ciudadanos de la región de Ñuble, cuyo principal objetivo es crear las bases para nuestro Ecosistema de Emprendimiento. Te esperamos este 6 y 9 de septiembre, a las 18.30 horas ambos días, donde nos reuniremos para realizar esta reflexión…Acompáñanos a creer y crear nuestro Ñuble.').
                 format(validated_data['name']), settings.DEFAULT_FROM_EMAIL, [validated_data['email']])
         return validated_data
     

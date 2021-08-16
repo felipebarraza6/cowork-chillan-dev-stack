@@ -64,7 +64,6 @@ const Certification_b = ({state}) => {
         <Content style={{ padding: '0 50px', paddingTop:'50px' }}>
             <div className="site-layout-content">  
             {data && 
-
                 <FormUpdate initial={data.profile_b} />                    
             }              
             </div>                

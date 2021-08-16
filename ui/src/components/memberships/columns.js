@@ -5,6 +5,7 @@ import { updateMembership, updateFileMembership } from '../../actions/membership
 import {MembershipContext} from '../../containers/Memberships'
 import ListPayments from './Payments/ListPayments'
 import RenovationMembership from './RenovationMembership'
+import ModalAddPaymentForMembership from './ModalAddPaymentForMembership'
 const { Paragraph, Text } = Typography
 const { TextArea } = Input
 const user = JSON.parse(localStorage.getItem('user') || null)
@@ -154,8 +155,14 @@ export const columns = [
             <Col span={24}>
                 <ListPayments obj={obj} />
                 {obj.is_active & !obj.paid_out ? 
-                    <>
+                    <><Row>
+                        <Col span={24}>
+                        <ModalAddPaymentForMembership />
+                        </Col>
+                        <Col span={24}>
                         <ModalDeactivateMembership obj={obj} />
+                        </Col>
+                    </Row>
                     </>:''
 
                 }

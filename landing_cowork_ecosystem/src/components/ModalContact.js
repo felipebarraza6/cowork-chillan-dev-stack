@@ -7,7 +7,6 @@ const ModalContact = () => {
 
     return(
         <Card title='Participa' onCancel={()=>setVisible(false)} >
-
         </Card>
     )
 }

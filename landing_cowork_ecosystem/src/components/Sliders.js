@@ -8,15 +8,14 @@ import { Card, Row, Col,
 
 import { CloseCircleOutlined } from '@ant-design/icons'
 
-const { Title } = Typography
+const { Title, Paragraph } =  Typography
 
 
 const Sliders = ({is_mobile}) => {
 
     const [viewForm, setViewForm] = useState(true)
 
-    return(        
-            <>
+    return(<>
                 {is_mobile ? <div style={{  
                     backgroundImage: `url(${Slide1})`,
                     backgroundPosition: 'center',
@@ -32,15 +31,26 @@ const Sliders = ({is_mobile}) => {
                                 <Card style={styles.card}>
                                     <Row>
                                         <Col span={12}>
-                                            <Title level={3} style={styles.title}>Participar</Title>                                            
+                                            <Title level={3} style={styles.title}>Participa</Title>                                            
                                         </Col>
                                         <Col span={12} style={{textAlign: 'end'}}>
                                             <Button type='link' onClick={()=>setViewForm(false)}>
                                                 <CloseCircleOutlined style={styles.close} />
                                             </Button>
                                         </Col>
-                                        <Col span={24}>
-                                            <FormSuscription closeAffix={setViewForm} is_affix={true} in_affix={true} />
+                                        <Col span={12}>
+                                            <Paragraph style={styles.title}>
+                                                Sumate a crear el ecosistema de emprendimiento que necesita Ñuble, has click en el botón de acceso
+                                            </Paragraph>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Button type='primary' size='large'
+                                                style={{marginLeft:'40%'}}
+                                                onClick={()=> {
+                                                    window.open('https://us06web.zoom.us/j/2354833395')
+                                                }}
+                                            >
+                                                INGRESAR</Button>
                                         </Col>
                                     </Row>
                                 </Card>
@@ -73,7 +83,14 @@ const Sliders = ({is_mobile}) => {
                                             </Button>
                                         </Col>
                                         <Col span={24}>
-                                            <FormSuscription closeAffix={setViewForm} is_affix={true} in_affix={true} />
+                                            <Paragraph style={styles.title}>
+                                                Sumate a crear el ecosistema de emprendimiento que necesita Ñuble, has click en el botón de acceso
+                                            </Paragraph>
+                                        </Col>
+                                        <Col span={24}>
+                                            <Button type='primary' size='large'
+                                                onClick={()=> window.open()}
+                                            >Ingresar</Button>
                                         </Col>
                                     </Row>
                                 </Card>
@@ -97,7 +114,7 @@ const styles = {
         paddingTop:'0px'
     },
     card: {
-        width: '900px',
+        width: '700px',
         backgroundColor: '#3D276C',
         borderColor: '#3D276C',
         borderRadius: '20px',

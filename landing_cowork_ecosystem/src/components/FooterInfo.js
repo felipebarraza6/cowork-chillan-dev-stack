@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Typography, Button} from 'antd'
+import { Row, Col, Typography } from 'antd'
 import logo from '../assets/images/cowork_dark.png'
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined } from '@ant-design/icons'
 const { Paragraph, Title } = Typography

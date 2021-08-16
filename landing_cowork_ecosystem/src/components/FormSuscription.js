@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Typography, Select,
         notification, Row, Col, 
-        Input, Button, } from 'antd'
+        Input, Button } from 'antd'
 import { callbacks } from '../api/endpoints'
 
 const { Title, Text } = Typography
@@ -29,7 +29,6 @@ const FormSuscription = ({ closeAffix, is_affix, in_affix }) => {
     const [response, setResponse] = useState(initialResponsive)
 
     const onFinish = async(values) => {
-        console.log(values)
         try {
             const request = await callbacks.signupEvent(values)
             notification.success({message: 'Inscripcion realizada correctamente'})
@@ -155,8 +154,8 @@ const FormSuscription = ({ closeAffix, is_affix, in_affix }) => {
                                 style={{color:'white'}} label={<Text style={styles.text}>Participación</Text>}>                        
                                 <Select placeholder='Selecciona una opcion...'>
                                     <Option value='Primera jornada(6 de septiembre)'>Primera jornada(6 de septiembre)</Option>
-                                    <Option value='Segunda jornada(9 de Septiembre)'>Segunda jornada(9 de Septiembre)</Option>
-                                    <Option value='Ambas jornadas(6 y 9 Septiembre)'>Ambas jornadas(6 y 9 Septiembre)</Option>                                    
+                                    <Option value='Segunda jornada(8 de Septiembre)'>Segunda jornada(8 de Septiembre)</Option>
+                                    <Option value='Ambas jornadas(6 y 8 Septiembre)'>Ambas jornadas(6 y 8 Septiembre)</Option>                                    
                                 </Select>
                             </Form.Item>
                         </Col>                        

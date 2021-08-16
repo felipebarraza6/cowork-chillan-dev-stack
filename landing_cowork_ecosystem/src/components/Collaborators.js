@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Typography, Button} from 'antd'
+import { Row, Col, Typography } from 'antd'
 import logo_cowork from '../assets/images/cowork_dark.png'
 import logo_corfo from '../assets/images/corfo.png'
 import logo_mentorinn from '../assets/images/mentorinn.png'

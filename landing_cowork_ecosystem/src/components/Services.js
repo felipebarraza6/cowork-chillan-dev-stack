@@ -1,11 +1,11 @@
 import React from 'react'
 import { Row, Col, Typography,
         Card } from 'antd'
-import { SketchOutlined, CalendarOutlined, DesktopOutlined,
+import { CalendarOutlined, DesktopOutlined,
         DeploymentUnitOutlined, BuildOutlined, TeamOutlined,
         InfoCircleFilled } from '@ant-design/icons'
 
-const { Title, Paragraph, Text } = Typography
+const { Title } = Typography
 
 const Services = () => {
 
@@ -18,7 +18,7 @@ const Services = () => {
                 <Card style={styles.card} hoverable>
                     <p>¿Cuándo?</p>
                     <CalendarOutlined style={styles.icon} />
-                    <p>6 y 9 de Septiembre 2021 a las 18:30 hrs</p>
+                    <p>6 y 8 de Septiembre 2021 a las 18:30 hrs</p>
                 </Card>
             </Col>
             <Col style={styles.col} col={6}>

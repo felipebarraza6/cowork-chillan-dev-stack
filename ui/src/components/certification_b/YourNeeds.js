@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 
-import { Button, Col, Row, Checkbox, Form, Modal } from 'antd'
+import { Button, Col, Row, Checkbox, Form, Modal, Input } from 'antd'
 const {Item:ItemForm}=Form
 
 const YourNeeds = () => {
 
     const [visible, setVisible] = useState(false)
+    
+    const initialState = {
+        isOthers: false,
+        str_other: ''
+    }
+
+    const [state, setState] = useState(initialState)
+
     return(<>
         <Modal width="800" visible={visible} onCancel={()=>setVisible(false)} okButtonProps={{ disabled: true }}>
                 <Row>
@@ -58,7 +66,14 @@ const YourNeeds = () => {
                                 <Checkbox rows='4' style={{marginRight:'5px'}} /> Asesoría en economía circular y reciclaje de residuos
                             </ItemForm>
                             <ItemForm>
-                                <Checkbox rows='4' style={{marginRight:'5px'}} /> Otros...
+                                <Checkbox onChange={(e)=> { 
+                                    if(e.target.checked){
+                                        setState({...state, isOthers: true})
+                                    }else{
+                                        setState({...state, isOthers: false}) 
+                                    }
+                                 }} style={{marginRight:'5px'}} /> Otros...
+                                 {state.isOthers && <Input.TextArea rows={4} placeholder='Describe...' />}
                             </ItemForm>
                             
                         </Col>

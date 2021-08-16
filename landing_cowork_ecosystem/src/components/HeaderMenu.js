@@ -1,5 +1,5 @@
 import React from 'react'
-import {Col, Row, Button } from 'antd'
+import {Col, Row } from 'antd'
 import { HashLink as Link } from 'react-router-hash-link'
 
 const HeaderMenu = ({ is_mobile }) => {

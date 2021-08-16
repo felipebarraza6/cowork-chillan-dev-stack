@@ -25,9 +25,11 @@ const FormUpdate = ({ initial }) => {
         console.log(clients)
     }
 
+    console.log(initial)
+
 
     return (
-        <>
+        <Form layout={'vertical'}>
             <Tabs>
                 <TabPane key={1} tab={<span><FileProtectOutlined/>Sostenibilidad de tu negocios</span>}>                    
                    <Sustainability /> 
@@ -42,7 +44,7 @@ const FormUpdate = ({ initial }) => {
                     <EcologicImpact /> 
                 </TabPane>
             </Tabs>  
-        </>
+        </Form>
     )
 }
 

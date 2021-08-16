@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Col, Row, Form, Input, Button } from 'antd'
 const {TextArea} = Input
@@ -6,6 +6,27 @@ const {Item:ItemForm} = Form
 
 
 const Sustainability = () => {
+    
+    const initialState = {
+        purpose: '',
+        vision: '',
+        values: '',
+        socio_environmental_benefits: '',
+        how_help_you: ''        
+    }
+
+    const [state, setState] = useState(initialState)
+
+    const onChange = (value) => {
+        var name=value.target.name
+
+        setState({
+            ...state, 
+            name: value.target.value
+        })
+    }
+
+    console.log(state)
 
     return(<Form layout={'vertical'}>
             <Row>
@@ -14,7 +35,7 @@ const Sustainability = () => {
                         <TextArea rows='4' />
                     </ItemForm>
                     <ItemForm label='Qué beneficios socioambientales les entregas a tus clientes a través de tu negocio.' name='socio_environmental_benefits'>
-                        <TextArea rows='4' />
+                        <TextArea name='how_help_you' rows='4' value={state.purpose} onChange={(value)=>onChange(value)} />
                     </ItemForm>  
                 </Col>       
                 <Col span={8} style={styles.col} >
