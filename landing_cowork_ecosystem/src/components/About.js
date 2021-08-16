@@ -47,7 +47,7 @@ const About = () => {
             <Col span={24}>
                 <Paragraph style={styles.dates}>
                     <Text style={styles.textDates} strong>
-                    6 y 9 de septiembre a las 18:30 hrs
+                    8 y 9 de septiembre a las 18:30 hrs
                     </Text>
                 </Paragraph>
             </Col>
