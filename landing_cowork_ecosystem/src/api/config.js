@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 //export const BASE_URL = 'http://localhost:8000'
-export const BASE_URL = 'http://creanuble.coworkchillan.cl:8000'
+export const BASE_URL = 'https://api.creanuble.cl'
 
 export const INSTANCE = axios.create({
     baseURL: BASE_URL

@@ -44,7 +44,7 @@ const Home = () => {
                     <img src={logo_src} alt='logo' style={styles.logo} />
                 </Col>
                 <Col span={12}>
-                    <Title style={styles.title} level={5}>8 y 9 de septiembre a las 18:30 hrs</Title>
+                    <Title style={styles.title} level={5}>6 y 8 de septiembre a las 18:30 hrs</Title>
                 </Col>                
                 <Col span={8}> 
                     <HeaderMenu is_mobile={is_mobile} />
