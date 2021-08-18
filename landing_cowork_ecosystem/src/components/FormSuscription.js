@@ -155,8 +155,8 @@ const FormSuscription = ({ closeAffix, is_affix, in_affix }) => {
                                 style={{color:'white'}} label={<Text style={styles.text}>Participación</Text>}>                        
                                 <Select placeholder='Selecciona una opcion...'>
                                     <Option value='Primera jornada(6 de septiembre)'>Primera jornada(6 de septiembre)</Option>
-                                    <Option value='Segunda jornada(9 de Septiembre)'>Segunda jornada(9 de Septiembre)</Option>
-                                    <Option value='Ambas jornadas(6 y 9 Septiembre)'>Ambas jornadas(6 y 9 Septiembre)</Option>                                    
+                                    <Option value='Segunda jornada(8 de Septiembre)'>Segunda jornada(8 de Septiembre)</Option>
+                                    <Option value='Ambas jornadas(6 y 8 Septiembre)'>Ambas jornadas(6 y 8 Septiembre)</Option>                                    
                                 </Select>
                             </Form.Item>
                         </Col>                        
