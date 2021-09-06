@@ -40,7 +40,7 @@ const Sliders = ({is_mobile}) => {
                                         </Col>
                                         <Col span={12}>
                                             <Paragraph style={styles.title}>
-                                                Sumate a crear el ecosistema de emprendimiento que necesita Ñuble, has click en el botón de acceso
+                                                Sumate a crear el ecosistema de emprendimiento que necesita Ñuble, has click en el botón de acceso.
                                             </Paragraph>
                                         </Col>
                                         <Col span={12}>
