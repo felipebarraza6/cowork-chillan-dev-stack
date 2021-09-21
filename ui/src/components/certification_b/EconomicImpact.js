@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Col, Row, Input, 
         Form, Button, Select,
-        Checkbox, Typography, Tag } from 'antd'
+        Checkbox, Typography, Tag,
+        notification } from 'antd'
 import { PlusCircleOutlined} from '@ant-design/icons'
 
-const {TextArea}=Input
-const {Item:ItemForm}=Form
-const {Text} = Typography
+import { FormContext } from './FormUpdate.js'
+import clients from '../../api/clients/endpoints'
+
+const { TextArea } = Input
+const { Text, Paragraph } = Typography
 
 const EconomicImpact = () => {
+    
+    const { state } = useContext(FormContext)
 
-    const initialState = {
+    const initialField = {
         isMicro: false,
         isSmall: false,
         isMedium: false,
@@ -19,6 +24,7 @@ const EconomicImpact = () => {
         isWorkersBenefited: false,
         numberWorkersBenefited: 0,
         isProtectionLaw: false,
+        hasLinkedYou: false,
         protectionLaw: '',
         isEconomicHelp: false,
         economicsHelps: '',
@@ -32,17 +38,24 @@ const EconomicImpact = () => {
         valueNumberCal2: 0, 
     }
 
-    const [state, setState] = useState(initialState)
-    console.log(state)
+    const [field, setField] = useState(initialField)
 
-    const calculateValues = (val1,val2) => {
-        const value1 = state.valueNumberCal1
-        const value2 = state.valueNumberCal2
+    const  initialData = {
+        accumulated_sales: null, 
+        previust_costs: null, 
+        mypyme_single_entry: null, 
+        workers_subsidy: null,
+        workers_employment_law: null, 
+        benefits_financial_aid: null, 
+        linked_entrepreneur: null, 
+        years_payment_vat: []
     }
+    const [data, setData] = useState(initialData)
+
 
     var formatNumber = {
         separador: ".", // separador para los miles
-        sepDecimal: ',', // separador para los decimales
+        sepDecimal: ',', //nullarador para los decimales
         formatear:function (num){
         num +='';
         var splitStr = num.split('.');
@@ -60,37 +73,69 @@ const EconomicImpact = () => {
         }
     }
 
+    useEffect(() => {
+        if(state.years_payment_vat){
+            setField({
+                ...field,
+                listYears: state.years_payment_vat
+            })
+        }
+    }, [])
+    
+    const updateCertb = async(data) => {
+        let validated_data = {}
+
+        for (var [key, value] of Object.entries(data)) {
+            if(value != null){
+                validated_data[key] = value
+            }
+        }
+        
+        try {
+            const request = await clients.update_profileb(state.id, validated_data)
+            notification.success({message:'DATOS ACTUALIZADOS, EN EL PROXIMO INGRESO VERAS LOS CAMBIOS'})
+            return request
+        }catch(e) {
+            notification.error({message: 'ERROR AL ACTUALIZAR TUS DATOS CONTACTA AL ADMINISTRADOR'})
+        }
+    }
+
+
     return(
-        <Form layout={'vertical'}>
+        <div>
             <Row>    
                 <Col span={12} style={styles.col}>
-                    <ItemForm label='Categoría empresa: Ventas acumuladas al 31 dic del año anterior' name='accumulated_salves'>
-                        {!state.isSelectOption ?
+                <div style={styles.container}>
+                    <Paragraph>Categoría empresa: Ventas acumuladas al 31 dic del año anterior</Paragraph>
+                    {state.accumulated_sales && 
+                        <Paragraph mark>{state.accumulated_sales}</Paragraph>
+                    }
+                        {!field.isSelectOption ?
                         <Select placeholder='Selecciona tu categoria...' style={{width:'300px'}} onSelect={(value)=>{
                             if(value==='is_micro'){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isMicro: true,
                                     isSelectOption: true
                                 })
                             }
                             if(value==='is_small'){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isSmall: true,
                                     isSelectOption: true
                                 })
                             }
                             if(value==='is_medium'){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isMedium: true,
                                     isSelectOption: true
                                 })
                             }
                             if(value==='is_big'){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isBig: true,
                                     isSelectOption: true
                                 })
@@ -108,197 +153,264 @@ const EconomicImpact = () => {
                             <Select.Option value='is_big'> 
                                 Grande
                             </Select.Option>
-                         </Select>:<Button type='primary' style={styles.btn} onClick={()=> setState({ 
-                            ...state,
+                         </Select>:<Button type='primary' style={styles.btn} onClick={()=> setField({ 
+                            ...field,
                             isMicro: false,
                             isSmall: false,
                             isMedium: false,
                             isBig: false,
                             isSelectOption: false 
                           })}>Limpiar seleccion</Button>}
-                        {state.isMicro && 
-                            <Select placeholder='Selecciona una rango' style={{width:'300px'}} >
-                                <Select.Option>0 - 480 UF</Select.Option>
-                                <Select.Option>481 - 960 UF</Select.Option>
-                                <Select.Option>961 - 1.440 UF</Select.Option>
-                                <Select.Option>1.441 - 1.920 UF</Select.Option>
-                                <Select.Option>1.921 - 2.400 UF</Select.Option>
+                        {field.isMicro && 
+                            <Select placeholder='Selecciona una rango' style={{width:'300px'}} 
+                                onChange={(value)=>setData({...data, accumulated_sales: value})} >
+                                <Select.Option value='Micro: 0 - 480 UF'>0 - 480 UF</Select.Option>
+                                <Select.Option value='Micro: 481 - 960 UF'>481 - 960 UF</Select.Option>
+                                <Select.Option value='Micro: 961 - 1.440 UF'>961 - 1.440 UF</Select.Option>
+                                <Select.Option value='Micro: 1.441 - 1.920 UF'>1.441 - 1.920 UF</Select.Option>
+                                <Select.Option value='Micro: 1.291 - 2.400 UF'>1.921 - 2.400 UF</Select.Option>
                             </Select>
                         }
-                        {state.isSmall && 
-                            <Select placeholder='Selecciona una rango' style={{width:'300px'}} >
-                                <Select.Option>2.401 - 5.000 UF</Select.Option>
-                                <Select.Option>5.001 - 10.000 UF</Select.Option>
-                                <Select.Option>10.001 - 15.000 UF</Select.Option>
-                                <Select.Option>15.001 - 20.000 UF</Select.Option>
-                                <Select.Option>20.001 - 25.000 UF</Select.Option>
+                        {field.isSmall && 
+                            <Select placeholder='Selecciona una rango' style={{width:'300px'}}
+                                onChange={(value)=>setData({...data, accumulated_sales: value})} >
+                                <Select.Option value='Pequeña: 2.401 - 5.000 UF'>2.401 - 5.000 UF</Select.Option>
+                                <Select.Option value='Pequeña: 5.001 - 10.000 UF'>5.001 - 10.000 UF</Select.Option>
+                                <Select.Option value='Pequeña: 10.001l - 15.000 UF'>10.001 - 15.000 UF</Select.Option>
+                                <Select.Option value='Pequeña: 15.001 - 20.000 UF'>15.001 - 20.000 UF</Select.Option>
+                                <Select.Option value='Pequeña: 20.001 - 25.000 UF'>20.001 - 25.000 UF</Select.Option>
                             </Select>
                         }
-                        {state.isMedium && 
-                            <Select placeholder='Selecciona una rango' style={{width:'300px'}} >
-                                <Select.Option>25.001 - 40.000 UF</Select.Option>
-                                <Select.Option>40.001 - 55.000 UF</Select.Option>
-                                <Select.Option>55.001 - 70.000 UF</Select.Option>
-                                <Select.Option>70.001 - 85.000 UF</Select.Option>
-                                <Select.Option>85.001 - 100.000 UF</Select.Option>
+                        {field.isMedium && 
+                            <Select placeholder='Selecciona una rango' style={{width:'300px'}}
+                                onChange={(value)=>setData({...data, accumulated_sales: value})} >
+                                <Select.Option value='Mediana: 25.001 - 40.000 UF'>25.001 - 40.000 UF</Select.Option>
+                                <Select.Option value='Mediana: 40.001 - 55.000 UF'>40.001 - 55.000 UF</Select.Option>
+                                <Select.Option value='Mediana: 55.001 - 70.000 UF'>55.001 - 70.000 UF</Select.Option>
+                                <Select.Option value='Mediana: 70.001 - 85.000 UF'>70.001 - 85.000 UF</Select.Option>
+                                <Select.Option value='Mediana: 85.001 - 100.000 UF'>85.001 - 100.000 UF</Select.Option>
                             </Select>
                         }
-                        {state.isBig && 
-                            <Select placeholder='Selecciona una rango' style={{width:'300px'}} >
-                                <Select.Option>100.000+ UF</Select.Option>
+                        {field.isBig && 
+                            <Select placeholder='Selecciona una rango' style={{width:'300px'}}
+                                onChange={(value)=>setData({...data, accumulated_sales: value})} >
+                                <Select.Option value='Grande: 100.000 UF'>100.000+ UF</Select.Option>
                             </Select>
                         }                         
-                    </ItemForm>
-                    <ItemForm label='Cuanto has gastado en costos fijos de oficiina antes de llegar a cowork?'>
-                        <Select placeholder='Selecciona tu rango...' style={{width:'300px'}}>
-                            <Select.Option>
+                    </div>
+                    <div style={styles.container}>
+                        <Paragraph>Cuanto has gastado en costos fijos de oficiina antes de llegar a cowork?</Paragraph>
+                        {state.previust_costs && 
+                            <Paragraph mark>{state.previust_costs}</Paragraph>
+                        }
+                        <Select placeholder='Selecciona tu rango...' style={{width:'300px'}} 
+                           onChange={(value)=>setData({...data, previust_costs: value})} >
+                            <Select.Option value='$0 - $100.000'>
                                 $0 - $100.000
                             </Select.Option>
-                            <Select.Option>
+                            <Select.Option value='$100.000 - $200.000'>
                                 $100.000 - $200.000
                             </Select.Option>
-                            <Select.Option>
+                            <Select.Option value='$201.000 -  $300.000'>
                                 $201.000 -  $300.000
                             </Select.Option>
-                            <Select.Option>
+                            <Select.Option value='$301.000  - $400.000'>
                                 $301.000  - $400.000
                             </Select.Option>
-                            <Select.Option>
+                            <Select.Option value='$401.000 - (+)'>
                                 $401.000 - (+)
                             </Select.Option>
                         </Select>
-                    </ItemForm>
-                    <ItemForm label='Mipyme es el único ingreso para la famila?' >
-                        <Checkbox /> SI
-                    </ItemForm>
-                    <ItemForm label='Los trabajadores de la Mipyme han sido beneficiados de  subsidios'>
+                    </div>
+                    <div style={styles.container}>
+                        <Paragraph>Mipyme es el único ingreso para la famila?</Paragraph>
+                            {state.mypyme_single_entry && <Paragraph mark>SI</Paragraph>}
+                        <Checkbox onChange={(e)=> setData({...data, mypyme_single_entry: true})} /> SI
+                        <Checkbox onChange={(e)=> setData({...data, mypyme_single_entry: false})} /> NO
+                    </div>
+                    <div style={styles.container}>
+                        <Paragraph>Los trabajadores de la Mipyme han sido beneficiados de  subsidios</Paragraph>
+                        {state.workers_subsidy && 
+                            <Paragraph mark>SI: {state.workers_subsidy} Trabajadores</Paragraph>
+                        }
                         <Checkbox onChange={(value)=>{
                             if(value.target.checked){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isWorkersBenefited: true
                                 })
                             }else{
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isWorkersBenefited: false
                                 }) 
                             }
                         }} /> SI
-                        {state.isWorkersBenefited && <Input style={styles.input} type='number' placeholder='Cuantos?' />}
-                    </ItemForm>
-                    <ItemForm label='Tu empresa se a adscrito a la ley de protección del empleo' >
-                        <Checkbox onChange={(value)=>{
-                            if(value.target.checked){
-                                setState({
-                                    ...state,
-                                    isProtectionLaw: true
-                                })
-                            }else{
-                                setState({
-                                    ...state,
-                                    isProtectionLaw: false
-                                }) 
+                        <Checkbox onChange={(e)=> {
+                            setData({...data, workers_subsidy: ''})
+                            setField({...field, isWorkersBenefited: false})
+                        }} /> NO
+                        {field.isWorkersBenefited && <Input style={styles.input} type='number' placeholder='Cuantos?' 
+                            onChange={(e)=> setData({...data, workers_subsidy: e.target.value})}
+                        />}
+                    </div>
+                    <div style={styles.container}>
+                        <Paragraph>Tu empresa se a adscrito a la ley de protección del empleo</Paragraph>
+                            {state.workers_employment_law && 
+                                <Paragraph mark>SI: {state.workers_employment_law}</Paragraph>
                             }
-                        }}  /> SI
-                        {state.isProtectionLaw && <Input style={styles.input} placeholder={'Describe cuales...'} />}
-                    </ItemForm>
-                    <ItemForm label='Que beneficios de subsidios o ayudas economicas has recibido, de que instituciones del estado(corfo, sercotec, entre otras...) EXPLIQUE CUALES' >
+                            <Checkbox onChange={(value)=>{
+                                if(value.target.checked){
+                                    setField({
+                                        ...field,
+                                        isProtectionLaw: true
+                                    })
+                                }else{
+                                    setField({
+                                        ...field,
+                                        isProtectionLaw: false
+                                    }) 
+                                }
+                            }}  /> SI
+                             <Checkbox onChange={(e)=> {
+                                setData({...data, workers_employment_law: ''})
+                                setField({...field, isProtectionLaw: false})
+                                }} /> NO
+                            {field.isProtectionLaw && <Input style={styles.input} placeholder={'Describe cuales...'} 
+                               onChange={(e)=> setData({...data, workers_employment_law: e.target.value})} />}
+                    </div>
+                    <div style={styles.container}>
+                        <Paragraph>
+                            Que beneficios de subsidios o ayudas economicas has recibido, de que instituciones del estado(corfo, sercotec, entre otras...) EXPLIQUE CUALES
+                        </Paragraph>
+                        {state.benefits_financial_aid && 
+                            <Paragraph mark>SI: {state.benefits_financial_aid}</Paragraph>
+                        }
                         <Checkbox onChange={(value)=>{
                             if(value.target.checked){
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isEconomicHelp: true
                                 })
                             }else{
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     isEconomicHelp: false
                                 }) 
                             }
                         }} /> SI
-                        {state.isEconomicHelp && <Input style={styles.input} placeholder={'Describe cuales...'} />}
-                    </ItemForm>
+                         <Checkbox onChange={(e)=> {
+                            setData({...data, benefits_financial_aid: ''})
+                            setField({...field, isEconomicHelp: false})
+                        }} /> NO
+                        {field.isEconomicHelp && <Input style={styles.input} placeholder={'Describe cuales...'} 
+                            onChange={(e)=> setData({...data, benefits_financial_aid: e.target.value})} />}
+                    </div>
                 </Col>
                 <Col span={12} style={styles.col}>
+                    <div style={styles.container}>
+                    <Paragraph>¿Te has vinculado/trabajado con algún emprendimiento que participa de la comunidad Cowork Chillán a través de prestaciones de servicios, proyectos y/o negocios? De ser así, indícanos su nombre y cuéntanos que han logrado juntos (si es más de uno, por favor, expláyate todo lo que necesites)</Paragraph>
+                        {state.linked_entrepreneur && 
+                            <Paragraph mark>SI: {state.linked_entrepreneur}</Paragraph>
+                        }
+                        <Checkbox onChange={(value)=>{
+                            if(value.target.checked){
+                                setField({
+                                    ...field,
+                                    hasLinkedYou: true
+                                })
+                            }else{
+                                setField({
+                                    ...field,
+                                    hasLinkedYou: false
+                                }) 
+                            }
+                        }}  /> Si
+
+                        <Checkbox onChange={(e)=> {
+                            setData({...data, linked_entrepreneur:''})
+                            setField({...field, hasLinkedYou: false})
+                        }} /> NO
+
+                        {field.hasLinkedYou && <TextArea rows={4} style={styles.input} placeholder={'Describe...'} 
+                            onChange={(e)=> setData({...data, linked_entrepreneur: e.target.value})}
+                        />}
+                    </div>
                     <Text>Pago de iva al 31 diciembre del año anterior (incluir años para individualizar a qué año se refiere)</Text>
                     <Row style={{marginTop:'10px', marginBottom:'20px'}}>                        
-                        
                                 <Col span={6}>
                                     <Input placeholder='Año' onChange={(e)=>{
-
-                                        setState({...state, txtYear:e.target.value})
+                                        setField({...field, txtYear:e.target.value})
                                     }} />
                                 </Col>
                                 <Col span={18}>
-                                    <Input placeholder='Monto (CLP)' onChange={(e)=>setState({...state, txtAmount:e.target.value})} />
+                                    <Input placeholder='Monto (CLP)' onChange={(e)=>setField({...field, txtAmount:e.target.value})} />
                                 </Col>
                                 <Col span={24}>
-                                    {state.listYears.map((x)=>{
-                                        return(<Tag style={styles.tag} color={'gold'}> {x.slice(0,4)} - ${formatNumber.new(x.slice(6))} </Tag>)
+                                    {field.listYears.map((x,index)=>{
+                                        return(<Tag key={index} style={styles.tag} color={'gold'}> {x.slice(0,4)} - ${formatNumber.new(x.slice(6))} </Tag>)
                                     })}
-                                </Col>                                                        
+                        </Col>                                                        
                         <Col>
                             <Button style={{marginTop:'10px'}} icon={<PlusCircleOutlined />} onClick={(value)=> {
-                                setState({
-                                    ...state,
-                                    listYears: [...state.listYears, `${state.txtYear} - ${state.txtAmount}`],
-
-                                      
+                                setField({
+                                    ...field,
+                                    listYears: [...field.listYears, `${field.txtYear} - ${field.txtAmount}`],
                                   })                                
+                                setData({
+                                    ...data,
+                                    years_payment_vat: [...data.years_payment_vat, `${field.txtYear} - ${field.txtAmount}`]
+                                })
                             }} type='primary' >Agregar año</Button>
                         </Col>
                         <Col>
                         <Button style={{marginTop:'10px'}} onClick={()=> {
-                                setState({
-                                    ...state,
+                                setField({
+                                    ...field,
                                     listYears: [],
                                     valueCalculate1: '',
                                     valueNumberCal1: 0,
                                     valueCalculate2: '',
                                     valueNumberCal2: 0
-
-                                      
                                   })                                
                             }} type='primary' danger >Reiniciar</Button>
                         </Col>
                     </Row>
-                    <ItemForm label='% de variación ventas en relación al año anterior (selecciona 2 años para realizar el caculo):' name='percentage variation'>
+                    <Paragraph>% de variación ventas en relación al año anterior (selecciona 2 años para realizar el caculo):' name='percentage variation</Paragraph>
                             <Row>
                                 <Col span={12}>
                                     Elige el primer valor
-                                    <Select placeholder='Selecciona un valor...' onChange={(value)=>setState({...state, valueCalculate1: value, valueNumberCal1: parseInt(value.slice(7))})}>
-                                    {state.listYears.map((x)=>{
-                                        return(<Select.Option value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
+                                    <Select placeholder='Selecciona un valor...' onChange={(value)=>setField({...field, valueCalculate1: value, valueNumberCal1: parseInt(value.slice(7))})}>
+                                    {field.listYears.map((x, index)=>{
+                                        return(<Select.Option key={index} value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
                                     })}
                                     </Select>
                                 </Col> 
                                 <Col span={12}>
                                     Elige el segundo valor
-                                    <Select placeholder='Selecciona un valor...' onChange={(value)=>setState({...state, valueCalculate2: value, valueNumberCal2: parseInt(value.slice(7))})}>
-                                    {state.listYears.map((x)=>{
-                                        return(<Select.Option value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
+                                    <Select placeholder='Selecciona un valor...' onChange={(value)=>setField({...field, valueCalculate2: value, valueNumberCal2: parseInt(value.slice(7))})}>
+                                    {field.listYears.map((x, index)=>{
+                                        return(<Select.Option  key={index} value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
                                     })}
                                     </Select>
                                 </Col>
                                 <Col span={24}>
-                                    {state.valueCalculate1 && state.valueCalculate2 ? <>
+                                    {field.valueCalculate1 && field.valueCalculate2 ? <>
                                         <p style={{marginTop:'20px'}}>
-                                        Se calculara: <Tag color={'gold'}>{state.valueCalculate1.slice(0,4)} - ${formatNumber.new(state.valueCalculate1.slice(7))} </Tag> y <Tag color={'gold'}>{state.valueCalculate2.slice(0,4)} - ${formatNumber.new(state.valueCalculate2.slice(7))}</Tag>
+                                        Se calculara: <Tag color={'gold'}>{field.valueCalculate1.slice(0,4)} - ${formatNumber.new(field.valueCalculate1.slice(7))} </Tag> y <Tag color={'gold'}>{field.valueCalculate2.slice(0,4)} - ${formatNumber.new(field.valueCalculate2.slice(7))}</Tag>
                                         </p>
                                         <p>
-                                        Resultado: <Tag color={'gold'}>${formatNumber.new(Math.round((state.valueNumberCal1+state.valueNumberCal2)/2))}</Tag>
+                                        Resultado: <Tag color={'gold'}>${formatNumber.new(Math.round((field.valueNumberCal1+field.valueNumberCal2)/2))}</Tag>
                                         </p>
                                     </>:'Selecciona los valores a calcular...' }
                                 </Col>
                             </Row>
-                    </ItemForm>                                                        
                 </Col>        
                 <Col span={24} style={{textAlign: 'right'}}>
-                    <Button type='primary'>Guardar</Button>
+                    <Button type='primary' onClick={()=> updateCertb(data)}>Guardar Impacto Economico</Button>
                 </Col>
             </Row> 
-        </Form>
+        </div>
  
     )
 
@@ -318,6 +430,9 @@ const styles = {
     },
     tag: {
         marginTop:'10px'
+    },
+    container: {
+        margin: '20px 10px 20px 10px'
     }
 }
 

@@ -6,6 +6,10 @@ const update_profileb = async(profile_id, data) => {
     return request
 }
 
+const create_request_service = async(data) => {
+    const request = await POST(`services_request/`, data)
+    return request
+}
 
 const list_clients = async(page, first_name_contains = '', last_name_contains= '', dni_contains= '', is_legal_represent, is_active) => {
     const request = await GET(`clients/?page=${page}&dni__contains=${dni_contains}&first_name__contains=${first_name_contains}&surname__contains=${last_name_contains}&is_legal_represent=${is_legal_represent}&is_active=${is_active}`)
@@ -86,7 +90,8 @@ const clients = {
     report_natural_person,
     report_business,
     report_legal_represent,
-    update_profileb
+    update_profileb,
+    create_request_service
     
 }
 

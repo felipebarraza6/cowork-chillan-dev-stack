@@ -21,29 +21,23 @@ const Certification_b = ({state}) => {
             if(state.user.first_name === 'Empresa'){
                 const requestGet = await clients.retrieve_business(user.username)
                     .then((response)=> {
-                        setData(response.data)
+                        setData(response.data.profile_b)
                 })
                 return requestGet
             } else {
                 const requestGet = await clients.retrieve_client(user.username)
                     .then((response)=> {
-                        setData(response.data)
+                        console.log(response)
+                        setData(response.data.profile_b)
                 })
                 return requestGet
            }
         }
 
-        if(user.is_client && user.is_business){
-            getClient()
-        }else{
-            getClient()
-        }
-
+        getClient()
+        
     }, [])
-    if(data){
-        console.log(data.profile_b)
-    }
-    
+
 
     return(
         <Layout>
@@ -58,13 +52,12 @@ const Certification_b = ({state}) => {
             <MenuHeader />
         </Header>
         <Header>
-            
             <HeaderOptions />
         </Header>
         <Content style={{ padding: '0 50px', paddingTop:'50px' }}>
             <div className="site-layout-content">  
             {data && 
-                <FormUpdate initial={data.profile_b} />                    
+                <FormUpdate initial={data} />                    
             }              
             </div>                
         </Content>

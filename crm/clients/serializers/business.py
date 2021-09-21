@@ -67,7 +67,7 @@ class BusinessRetrieveSerializer(serializers.ModelSerializer):
     profile_b = serializers.SerializerMethodField('cert_b')
 
     def cert_b(self, business):
-        qs = ProfileCertb.objects.filter(business=business.id)
+        qs = ProfileCertb.objects.filter(business=business).first()
         serializer = ProfileCertbModelSerializer(instance=qs, many=False)
         return serializer.data
     

@@ -6,7 +6,7 @@ from django.contrib import admin
 # Models
 from crm.clients.models import (Business, Client, ProfileCertb,
                             Poll, QuestionPoll, AlternativeQuestionPoll, 
-                            AnswerQuestionPoll, ContestPoll, SignedUp)
+                            AnswerQuestionPoll, ContestPoll, SignedUp, ServiceRequests)
 
 from import_export.admin import ExportActionMixin
 
@@ -24,6 +24,7 @@ admin.site.register(QuestionPoll)
 admin.site.register(AlternativeQuestionPoll)
 admin.site.register(AnswerQuestionPoll)
 admin.site.register(ContestPoll)
+admin.site.register(ServiceRequests)
     
     
 

@@ -17,6 +17,7 @@ router = DefaultRouter()
 router.register(r'clients', client_views.ClientViewSet, basename='clients')
 router.register(r'signup_event', client_views.SignedUpViewSet, basename='signup')
 router.register(r'business', business_views.BusinessViewSet, basename='business')
+#router.register(r'service_request', certb_views.ServiceRequests, basename='service-request')
 
 # Clients
 router.register(r'report/natural-persons', report_views.ReportNaturalPerson, basename='report-natural')
@@ -24,6 +25,7 @@ router.register(r'report/legal-represents', report_views.ReportLegalRepresent, b
 router.register(r'report/business', report_views.ReportBusiness, basename='report-business')
 
 router.register(r'profile_certb', certb_views.ProfileCertbViewSet, basename='profile-certb')
+router.register(r'services_request', certb_views.ServiceRequestViewSet, basename='services-request')
 
 
 urlpatterns = [

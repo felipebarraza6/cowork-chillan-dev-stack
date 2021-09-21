@@ -16,14 +16,16 @@ from rest_framework.permissions import (
 from django_filters import rest_framework as filters
 
 # Serializers
-from crm.clients.serializers import ProfileCertbModelSerializer
+from crm.clients.serializers import (ProfileCertbModelSerializer, 
+                                     ServiceRequestModelSerializer)
 
 # Models
-from crm.clients.models import ProfileCertb
+from crm.clients.models import ProfileCertb, ServiceRequests
 
 
 class ProfileCertbViewSet(viewsets.GenericViewSet,                  
-                  mixins.RetrieveModelMixin, 
+                  mixins.RetrieveModelMixin,
+                  mixins.ListModelMixin,
                   mixins.UpdateModelMixin ):
 
     
@@ -39,3 +41,21 @@ class ProfileCertbViewSet(viewsets.GenericViewSet,
     serializer_class = ProfileCertbModelSerializer
     lookup_field = 'id'
     filter_backends = (filters.DjangoFilterBackend,)
+
+
+class ServiceRequestViewSet(viewsets.GenericViewSet,                  
+                  mixins.RetrieveModelMixin,
+                  mixins.CreateModelMixin):
+    
+    def get_permissions(self):
+        """Assign permissions based on action."""        
+        if self.action in ['create']:
+            permissions = [IsAuthenticated]
+        else:
+            permissions = [IsAuthenticated]
+        return [p() for p in permissions]
+
+    queryset = ServiceRequests.objects.all()
+    serializer_class = ServiceRequestModelSerializer
+    lookup_field = 'id'
+    filter_backends = (filters.DjangoFilterBackend,)   

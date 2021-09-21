@@ -1,35 +1,46 @@
-import React from 'react'
+import React, { useReducer, createContext, useEffect } from 'react'
 
-import {Form, Input, Tabs, Row, Col, 
-        Button,Checkbox} from 'antd'
+import {Row, Tabs, Col } from 'antd'
 
-import clients from '../../api/clients/endpoints'
 import Sustainability from './Sustainability'
 import EconomicImpact from './EconomicImpact'
 import SocialImpact from './SocialImpact'
 import EcologicImpact from './EcologicImpact'
+import YourNeeds from './YourNeeds'
 import {FileProtectOutlined, DollarCircleFilled, 
-    TeamOutlined, PictureOutlined, 
-    CheckCircleOutlined} from '@ant-design/icons'
+    TeamOutlined, PictureOutlined } from '@ant-design/icons'
+import { reducer } from '../../reducers/clients/certb'
 
-const { Item:ItemForm } = Form
-const { TextArea } = Input
+export const FormContext = createContext()
+
 const { TabPane } = Tabs
 
 
 const FormUpdate = ({ initial }) => {
     
-    const [form] = Form.useForm()
+    const initialState = {}
 
-    async function postData (values) {
-        console.log(clients)
-    }
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-    console.log(initial)
+    
+    useEffect(() =>{
+        if(initial){
+            dispatch({
+                type: 'ADD',
+                payload: initial
+            })
+        }
+    },[])
+
+    console.log(state)
 
 
-    return (
-        <Form layout={'vertical'}>
+    return (<FormContext.Provider value={{ state, dispatch}} >
+        <Row>
+            <Col offset={18}>
+                <YourNeeds />
+            </Col>
+            <Col>            
             <Tabs>
                 <TabPane key={1} tab={<span><FileProtectOutlined/>Sostenibilidad de tu negocios</span>}>                    
                    <Sustainability /> 
@@ -44,8 +55,9 @@ const FormUpdate = ({ initial }) => {
                     <EcologicImpact /> 
                 </TabPane>
             </Tabs>  
-        </Form>
-    )
+            </Col>
+        </Row>
+    </FormContext.Provider>)
 }
 
 const styles = {

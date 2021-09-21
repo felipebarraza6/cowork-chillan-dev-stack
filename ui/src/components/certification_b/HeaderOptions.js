@@ -12,9 +12,7 @@ const HeaderOptions = () => {
                     TU CENTRO DE EMPRENDIMIENTO E INNOVACION SOSTENIBLE
                 </Title> 
             </Col>
-            <Col span={12} style={{textAlign: 'right'}}>
-                <YourNeeds />
-            </Col>
+            
         </Row>)
 
 }
