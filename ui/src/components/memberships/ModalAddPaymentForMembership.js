@@ -1,10 +1,152 @@
-import React from 'react'
-import { Button } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Button, Modal, Input, Typography,
+        Select, Row, Col, Checkbox, notification } from 'antd'
+
+import payments from '../../api/payments/endpoints'
+
+const { Title } = Typography        
+
 
 const ModalAddPaymentForMembership = ({ membership }) => {
 
+
+    const [visible, setVisible] = useState(false)
+    const [list, setList] = useState([])
+
+    const [data, setData] = useState({
+        membership: membership.id,
+        method: null,
+        bank_account: null,
+        amount: null,
+        description: null,
+        is_invoice: false,
+        is_ticket: false,
+        comprobant_file: null,                                                        
+    })
+
+
+
+    console.log(data)
+        
+    useEffect(() => {
+        const getData = async() => {
+            try {
+                const request = await payments.listBanks()                
+                setList(request.data.results)
+                return request
+            } catch (err) {
+                console.log(err)
+            }
+        }               
+        getData()
+    }, [])
+
+    const changeHandler = (event) => {
+		setData({...data, comprobant_file:event.target.files[0]})		
+	}
+
     return(<>
-        <Button style={styles.btn} type='primary'>(+) Agregar Pago</Button>
+        <Modal visible={visible} 
+            onCancel={()=> {
+                setVisible(false)            
+            }}
+            onOk = { async () => {
+                try {
+                    const request = await payments.addPaymemtForMembership(data)
+                    notification.success({message:'PAGO INGRESADO :)'})
+                    return request
+                } catch (e){
+                    console.log(e)
+                }
+                
+            }}
+            title={`Agregar Pago a membresia ${membership.uuid}`}
+            width={700}>
+                <Row gutter={16}>
+                    <Col>
+                        <Title style={styles.txt} level={4}>
+                        Tipo de pago
+                        </Title>
+                        <Select style={{width:'200px'}} placeholder="Selecciona una opcion"
+                            onChange = {(txt) => { 
+                                setData({
+                                    ...data,
+                                    method: txt
+                                })
+                            }}
+                        >
+                            <Select.Option value='Efectivo'>
+                                Efectivo
+                            </Select.Option>
+                            <Select.Option value='Transferencia'>
+                                Transferencia
+                            </Select.Option>
+                            <Select.Option value='Debito'>
+                                Debito
+                            </Select.Option>
+                            <Select.Option value='Credito'>
+                                Credito
+                            </Select.Option>
+                        </Select>
+                    </Col>
+                    <Col>
+                        <Title level={4} style={styles.txt}>
+                        Cuenta Bancaria
+                        </Title>
+                        <Select style={{width:'200px'}} placeholder="Selecciona una opcion"
+                            onChange = {(txt)=> {
+                                setData({
+                                    ...data,
+                                    bank_account: txt 
+                                })
+                            }}
+                        >
+                            {list.map((x)=> 
+                                <Select.Option key={x.id} value={x.id}>
+                                    {x.bank}
+                                </Select.Option>                                
+                            )}                                                       
+                        </Select> 
+                    </Col>
+                    <Col>
+                    <Title level={4} style={styles.txt}>
+                            Monto ($)
+                        </Title>
+                        <Input placeholder={'$'} onChange={(e)=>setData({...data, amount: e.target.value})} /> 
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={24} style={styles.description}>
+                        <Title level={4}>Descripcion</Title>
+                        <Input.TextArea rows={6} onChange={(e)=>setData({...data, description: e.target.value})} />
+                    </Col>
+                </Row>
+                <Row style={{'marginTop':'30px'}}>
+                    <Col span={12}>
+                        <Checkbox disabled={data.is_ticket} onChange = {(e)=> {                            
+                            setData({
+                                ...data,
+                                is_invoice: e.target.checked
+                            })
+                        }} /> FACTURA
+                    </Col>
+                    <Col span={12}>
+                        <Checkbox disabled={data.is_invoice} onChange = {(e)=> {                            
+                            setData({
+                                ...data,
+                                is_ticket: e.target.checked
+                            })
+                        }} /> BOLETA
+                    </Col>
+                    <Col span={24}>
+                        <Title level={4} style={styles.txt2}>Subir archivo(factura o boleta)</Title>
+                        <input type="file" id="myFile" name="filename" onChange={changeHandler} accept="application/pdf,application/vnd.ms-excel" />
+                    </Col>
+                </Row>
+            </Modal>
+        <Button style={styles.btn} type='primary' onClick={()=>{
+            setVisible(true)
+        }}>(+) Agregar Pago</Button>
     </>)
 
 }
@@ -13,6 +155,15 @@ const ModalAddPaymentForMembership = ({ membership }) => {
 const styles = {
     btn: {
         marginBottom: '10px'
+    },
+    txt: {
+        textAlign: 'center'
+    },
+    txt2: {
+        marginTop: '20px'
+    },
+    description: {
+        marginTop:'30px'
     }
 }
 

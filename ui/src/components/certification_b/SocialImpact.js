@@ -211,7 +211,7 @@ const SocialImpact = () => {
                                     placeholder='Etnia' style={{width:'200px'}} />
                             </Col>
                             <Col span={24}>
-                                
+                                {field.ethnicityPartners && <> 
                                     {field.ethnicityPartners.map((x, index)=> {                                    
                                             return(<> {field.ethnicityPartners && 
                                                 <Tag style={styles.tag} key={index} color={'green'}>
@@ -219,6 +219,7 @@ const SocialImpact = () => {
                                                 </Tag>
                                             } </>)                                                                       
                                     })}
+                                 </>}
                                 
                             </Col>
                             <Col span={24}>

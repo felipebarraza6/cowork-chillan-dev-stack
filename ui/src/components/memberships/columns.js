@@ -153,11 +153,11 @@ export const columns = [
             </Col>
 
             <Col span={24}>
-                <ListPayments obj={obj} />
+                <ListPayments obj={obj} />                
                 {obj.is_active & !obj.paid_out ? 
                     <><Row>
                         <Col span={24}>
-                        <ModalAddPaymentForMembership />
+                        <ModalAddPaymentForMembership membership={obj} />
                         </Col>
                         <Col span={24}>
                         <ModalDeactivateMembership obj={obj} />
