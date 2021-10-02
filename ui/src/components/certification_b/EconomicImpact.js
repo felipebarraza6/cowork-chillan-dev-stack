@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Col, Row, Input, 
-        Form, Button, Select,
+        Button, Select,
         Checkbox, Typography, Tag,
         notification } from 'antd'
 import { PlusCircleOutlined} from '@ant-design/icons'
@@ -12,9 +12,11 @@ const { TextArea } = Input
 const { Text, Paragraph } = Typography
 
 const EconomicImpact = () => {
+
+    
     
     const { state } = useContext(FormContext)
-
+    console.log(state)
     const initialField = {
         isMicro: false,
         isSmall: false,
@@ -43,7 +45,7 @@ const EconomicImpact = () => {
     const  initialData = {
         accumulated_sales: null, 
         previust_costs: null, 
-        mypyme_single_entry: null, 
+        mypyme_single_entry: state.mypyme_single_entry, 
         workers_subsidy: null,
         workers_employment_law: null, 
         benefits_financial_aid: null, 
@@ -74,12 +76,36 @@ const EconomicImpact = () => {
     }
 
     useEffect(() => {
-        if(state.years_payment_vat){
-            setField({
-                ...field,
-                listYears: state.years_payment_vat
-            })
+
+        let yearsList = state.years_payment_vat                 
+        let isworkersbenefited = false
+        let isprotectionlaw = false
+        let iseconomichelp = false
+        let islinktoyou = false
+
+        if(state.workers_subsidy){
+            isworkersbenefited = true
         }
+        if(state.workers_employment_law){
+            isprotectionlaw = true
+        }
+        if(state.benefits_financial_aid){
+            iseconomichelp = true   
+        }
+        if(state.linked_entrepreneur){
+            islinktoyou = true
+        }
+
+        setField({
+            ...field,
+            listYears: yearsList, 
+            isWorkersBenefited: isworkersbenefited,
+            isProtectionLaw: isprotectionlaw,
+            isEconomicHelp: iseconomichelp,
+            hasLinkedYou: islinktoyou         
+        })
+        setData({...data, years_payment_vat: yearsList})
+
     }, [])
     
     const updateCertb = async(data) => {
@@ -108,8 +134,9 @@ const EconomicImpact = () => {
                 <div style={styles.container}>
                     <Paragraph>Categoría empresa: Ventas acumuladas al 31 dic del año anterior</Paragraph>
                     {state.accumulated_sales && 
-                        <Paragraph mark>{state.accumulated_sales}</Paragraph>
-                    }
+                        <Row style={styles.rowTag}>
+                            <Tag>{state.accumulated_sales}</Tag>
+                        </Row>}
                         {!field.isSelectOption ?
                         <Select placeholder='Selecciona tu categoria...' style={{width:'300px'}} onSelect={(value)=>{
                             if(value==='is_micro'){
@@ -201,7 +228,9 @@ const EconomicImpact = () => {
                     <div style={styles.container}>
                         <Paragraph>Cuanto has gastado en costos fijos de oficiina antes de llegar a cowork?</Paragraph>
                         {state.previust_costs && 
-                            <Paragraph mark>{state.previust_costs}</Paragraph>
+                            <Row>
+                                <Tag style={styles.rowTag}>{state.previust_costs}</Tag>
+                            </Row>
                         }
                         <Select placeholder='Selecciona tu rango...' style={{width:'300px'}} 
                            onChange={(value)=>setData({...data, previust_costs: value})} >
@@ -224,15 +253,17 @@ const EconomicImpact = () => {
                     </div>
                     <div style={styles.container}>
                         <Paragraph>Mipyme es el único ingreso para la famila?</Paragraph>
-                            {state.mypyme_single_entry && <Paragraph mark>SI</Paragraph>}
-                        <Checkbox onChange={(e)=> setData({...data, mypyme_single_entry: true})} /> SI
-                        <Checkbox onChange={(e)=> setData({...data, mypyme_single_entry: false})} /> NO
+                        <Checkbox checked={data.mypyme_single_entry} 
+                            onChange={(e)=> setData({
+                                ...data, 
+                                mypyme_single_entry: true,
+
+                            })} /> SI
+                        <Checkbox checked={!data.mypyme_single_entry}
+                            onChange={(e)=> setData({...data, mypyme_single_entry: false})} /> NO
                     </div>
                     <div style={styles.container}>
                         <Paragraph>Los trabajadores de la Mipyme han sido beneficiados de  subsidios</Paragraph>
-                        {state.workers_subsidy && 
-                            <Paragraph mark>SI: {state.workers_subsidy} Trabajadores</Paragraph>
-                        }
                         <Checkbox onChange={(value)=>{
                             if(value.target.checked){
                                 setField({
@@ -245,20 +276,17 @@ const EconomicImpact = () => {
                                     isWorkersBenefited: false
                                 }) 
                             }
-                        }} /> SI
+                        }} checked={field.isWorkersBenefited} /> SI
                         <Checkbox onChange={(e)=> {
                             setData({...data, workers_subsidy: ''})
                             setField({...field, isWorkersBenefited: false})
-                        }} /> NO
-                        {field.isWorkersBenefited && <Input style={styles.input} type='number' placeholder='Cuantos?' 
+                        }} checked={!field.isWorkersBenefited} /> NO
+                        {field.isWorkersBenefited && <Input style={styles.input} type='number' defaultValue={state.workers_subsidy} placeholder='Cuantos?' 
                             onChange={(e)=> setData({...data, workers_subsidy: e.target.value})}
                         />}
                     </div>
                     <div style={styles.container}>
                         <Paragraph>Tu empresa se a adscrito a la ley de protección del empleo</Paragraph>
-                            {state.workers_employment_law && 
-                                <Paragraph mark>SI: {state.workers_employment_law}</Paragraph>
-                            }
                             <Checkbox onChange={(value)=>{
                                 if(value.target.checked){
                                     setField({
@@ -271,21 +299,19 @@ const EconomicImpact = () => {
                                         isProtectionLaw: false
                                     }) 
                                 }
-                            }}  /> SI
+                            }} checked={field.isProtectionLaw} /> SI
                              <Checkbox onChange={(e)=> {
                                 setData({...data, workers_employment_law: ''})
                                 setField({...field, isProtectionLaw: false})
-                                }} /> NO
+                                }} checked={!field.isProtectionLaw} /> NO
                             {field.isProtectionLaw && <Input style={styles.input} placeholder={'Describe cuales...'} 
-                               onChange={(e)=> setData({...data, workers_employment_law: e.target.value})} />}
+                                defaultValue={state.workers_employment_law}
+                                onChange={(e)=> setData({...data, workers_employment_law: e.target.value})} />}
                     </div>
                     <div style={styles.container}>
                         <Paragraph>
                             Que beneficios de subsidios o ayudas economicas has recibido, de que instituciones del estado(corfo, sercotec, entre otras...) EXPLIQUE CUALES
                         </Paragraph>
-                        {state.benefits_financial_aid && 
-                            <Paragraph mark>SI: {state.benefits_financial_aid}</Paragraph>
-                        }
                         <Checkbox onChange={(value)=>{
                             if(value.target.checked){
                                 setField({
@@ -298,21 +324,19 @@ const EconomicImpact = () => {
                                     isEconomicHelp: false
                                 }) 
                             }
-                        }} /> SI
+                        }} checked={field.isEconomicHelp} /> SI
                          <Checkbox onChange={(e)=> {
                             setData({...data, benefits_financial_aid: ''})
                             setField({...field, isEconomicHelp: false})
-                        }} /> NO
+                        }} checked={!field.isEconomicHelp} /> NO
                         {field.isEconomicHelp && <Input style={styles.input} placeholder={'Describe cuales...'} 
+                            defaultValue={state.benefits_financial_aid}
                             onChange={(e)=> setData({...data, benefits_financial_aid: e.target.value})} />}
                     </div>
                 </Col>
                 <Col span={12} style={styles.col}>
                     <div style={styles.container}>
-                    <Paragraph>¿Te has vinculado/trabajado con algún emprendimiento que participa de la comunidad Cowork Chillán a través de prestaciones de servicios, proyectos y/o negocios? De ser así, indícanos su nombre y cuéntanos que han logrado juntos (si es más de uno, por favor, expláyate todo lo que necesites)</Paragraph>
-                        {state.linked_entrepreneur && 
-                            <Paragraph mark>SI: {state.linked_entrepreneur}</Paragraph>
-                        }
+                    <Paragraph>¿Te has vinculado/trabajado con algún emprendimiento que participa de la comunidad Cowork Chillán a través de prestaciones de servicios, proyectos y/o negocios? De ser así, indícanos su nombre y cuéntanos que han logrado juntos (si es más de uno, por favor, expláyate todo lo que necesites)</Paragraph>                       
                         <Checkbox onChange={(value)=>{
                             if(value.target.checked){
                                 setField({
@@ -325,18 +349,18 @@ const EconomicImpact = () => {
                                     hasLinkedYou: false
                                 }) 
                             }
-                        }}  /> Si
+                        }} checked={field.hasLinkedYou} /> Si
 
                         <Checkbox onChange={(e)=> {
                             setData({...data, linked_entrepreneur:''})
                             setField({...field, hasLinkedYou: false})
-                        }} /> NO
+                        }} checked={!field.hasLinkedYou} /> NO
 
-                        {field.hasLinkedYou && <TextArea rows={4} style={styles.input} placeholder={'Describe...'} 
+                        {field.hasLinkedYou && <TextArea rows={4} defaultValue={state.linked_entrepreneur} style={styles.input} placeholder={'Describe...'} 
                             onChange={(e)=> setData({...data, linked_entrepreneur: e.target.value})}
                         />}
                     </div>
-                    <Text>Pago de iva al 31 diciembre del año anterior (incluir años para individualizar a qué año se refiere)</Text>
+                    <Text>ventas acumuladas por año (1 de enero al 31 de diciembre), debes incluir el año respectivo y el valor en pesos chilenos</Text>
                     <Row style={{marginTop:'10px', marginBottom:'20px'}}>                        
                                 <Col span={6}>
                                     <Input placeholder='Año' onChange={(e)=>{
@@ -376,7 +400,10 @@ const EconomicImpact = () => {
                             }} type='primary' danger >Reiniciar</Button>
                         </Col>
                     </Row>
-                    <Paragraph>% de variación ventas en relación al año anterior (selecciona 2 años para realizar el caculo):' name='percentage variation</Paragraph>
+                    <Paragraph>
+                        Calcula el promedio de ventas entre dos años distintos que quieras evaluar
+                    </Paragraph>
+
                             <Row>
                                 <Col span={12}>
                                     Elige el primer valor
@@ -433,6 +460,9 @@ const styles = {
     },
     container: {
         margin: '20px 10px 20px 10px'
+    },
+    rowTag: {
+        marginBottom: '10px'
     }
 }
 

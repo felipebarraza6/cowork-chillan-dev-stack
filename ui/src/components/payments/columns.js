@@ -6,11 +6,11 @@ export const  columns = [
     {
         title: 'Membresia / Reserva',
         render: x => {
-            if(x.membership){
-                return `Membresia: ${x.membership.uuid}`
-            }else{
-                return 'Reserva'
-            }
+            if(x.pay_for_service && x.membership){
+                return `Reserva: ${x.membership.uuid}`
+            } else {
+                return `Reserva #${x.book}`
+            }    
         }
     },
     {
@@ -23,7 +23,7 @@ export const  columns = [
     },
     {
         title: 'Monto ($)',
-        render: x => x.amount
+        render: x => `$ ${x.amount}`
     }, 
     {
       title: 'Tipo',

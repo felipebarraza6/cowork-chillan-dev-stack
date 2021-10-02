@@ -24,10 +24,14 @@ class MembershipAdmin(admin.ModelAdmin):
                 )
 
 
-    
+class PaymentAdmin(admin.ModelAdmin):
+    list_display=(
+        'id',
+        'pay_for_service'
+    )
 
 admin.site.register(Membership, MembershipAdmin)
-admin.site.register(Payment)
+admin.site.register(Payment, PaymentAdmin)
 admin.site.register(BankAccount)
 
 

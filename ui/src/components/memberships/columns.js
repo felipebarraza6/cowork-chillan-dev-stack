@@ -34,12 +34,20 @@ const ValidationFinishMembership = ({obj}) => {
     return(<>{type_user === 'A' && 
         <Button type='primary' style={styles.btn} onClick={()=>setModal({...modal, visible:true})} >Finalizar</Button>
         }
-        <Modal visible={modal.visible} width='600px' onCancel={()=>setModal({...modal, visible:false})} title={`Finalizar membresia ${obj.uuid}`}
+        <Modal visible={modal.visible} width='600px' 
+            onCancel={()=>
+                setModal({
+                    ...modal, 
+                    visible:false
+                })} 
+            title={`Finalizar membresia ${obj.uuid}`}
             okText='CONFIRMAR'
-        onOk = {()=> updateMembership(obj.uuid, {'is_active': 'false', 'is_finish': 'true'}).then((response)=> {
-            setModal({...modal, visible:false})
-        })}
-        >
+            onOk = {()=> 
+                updateMembership(obj.uuid, 
+                    {'is_active': 'false', 'is_finish': 'true'}
+                ).then((response)=> {
+                    setModal({...modal, visible:false})
+                })}>
             Estas seguro de finalizar esta membresia? una vez realizado no podras revertir el estado
         </Modal>
         </>)
@@ -56,7 +64,12 @@ const ModalDeactivateMembership = ({obj}) => {
     return(
         <>
             <Col span={24}>
-            <Button type='primary' danger style={styles.btn} onClick={()=>{setModal({...modal, visible:true})}} >Desactivar</Button>
+            <Button type='primary' danger style={styles.btn} 
+                onClick={()=>{
+                    setModal({
+                        ...modal, 
+                        visible:true})
+                }} >Desactivar</Button>
             </Col>
         <Modal 
             width={'600px'} 
@@ -69,7 +82,7 @@ const ModalDeactivateMembership = ({obj}) => {
                         'is_active': 'false', 
                         'reason_cancel':modal.reason
                     }).then((response)=> setModal({...modal, visible:false}))
-                updateFileMembership(obj.uuid, {
+                    updateFileMembership(obj.uuid, {
                     file_cancel:modal.file_cancel 
                 })
             }}>

@@ -24,9 +24,6 @@ const ModalAddPaymentForMembership = ({ membership }) => {
         comprobant_file: null,                                                        
     })
 
-
-
-    console.log(data)
         
     useEffect(() => {
         const getData = async() => {
@@ -42,24 +39,26 @@ const ModalAddPaymentForMembership = ({ membership }) => {
     }, [])
 
     const changeHandler = (event) => {
-		setData({...data, comprobant_file:event.target.files[0]})		
-	}
+	setData({...data, comprobant_file:event.target.files[0]})		
+    }
+
+    const postData = async() => {
+        try {
+            const request = await payments.addPaymemtForMembership(data)
+            notification.success({message:'PAGO INGRESADO :)'})
+            setVisible(false)
+            return request
+        } catch(e) {
+            console.log(e)
+        }
+    }
 
     return(<>
         <Modal visible={visible} 
             onCancel={()=> {
                 setVisible(false)            
             }}
-            onOk = { async () => {
-                try {
-                    const request = await payments.addPaymemtForMembership(data)
-                    notification.success({message:'PAGO INGRESADO :)'})
-                    return request
-                } catch (e){
-                    console.log(e)
-                }
-                
-            }}
+            onOk = {postData}               
             title={`Agregar Pago a membresia ${membership.uuid}`}
             width={700}>
                 <Row gutter={16}>
@@ -67,14 +66,10 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                         <Title style={styles.txt} level={4}>
                         Tipo de pago
                         </Title>
-                        <Select style={{width:'200px'}} placeholder="Selecciona una opcion"
+                        <Select style={styles.select} placeholder="Selecciona una opcion"
                             onChange = {(txt) => { 
-                                setData({
-                                    ...data,
-                                    method: txt
-                                })
-                            }}
-                        >
+                                setData({...data, method: txt})
+                            }}>
                             <Select.Option value='Efectivo'>
                                 Efectivo
                             </Select.Option>
@@ -93,14 +88,13 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                         <Title level={4} style={styles.txt}>
                         Cuenta Bancaria
                         </Title>
-                        <Select style={{width:'200px'}} placeholder="Selecciona una opcion"
+                        <Select style={styles.select} placeholder="Selecciona una opcion"
                             onChange = {(txt)=> {
                                 setData({
                                     ...data,
                                     bank_account: txt 
                                 })
-                            }}
-                        >
+                            }}>
                             {list.map((x)=> 
                                 <Select.Option key={x.id} value={x.id}>
                                     {x.bank}
@@ -121,7 +115,7 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                         <Input.TextArea rows={6} onChange={(e)=>setData({...data, description: e.target.value})} />
                     </Col>
                 </Row>
-                <Row style={{'marginTop':'30px'}}>
+                <Row style={styles.description}>
                     <Col span={12}>
                         <Checkbox disabled={data.is_ticket} onChange = {(e)=> {                            
                             setData({
@@ -164,7 +158,11 @@ const styles = {
     },
     description: {
         marginTop:'30px'
+    },
+    select: {
+        width: '200px'
     }
 }
+
 
 export default ModalAddPaymentForMembership

@@ -508,11 +508,7 @@ const SocialImpact = () => {
                                 {field.vendors && <Row>
                                 {field.vendors.map((x, index)=> {                                    
                                     return(<Col span={24}>            
-                                        <Tag key={index} style={styles.tag} color={'magenta'} closable onClose={() => {                                            
-                                            const elements = field.vendors.filter((x, i) => {console.log(x, i)})
-                                            console.log(elements)
-                                            setField({...field, sum_porcent_vendors: field.sum_porcent_vendors - x.porcent})                                                                                                                                    
-                                        }}>                                        
+                                        <Tag key={index} style={styles.tag} color={'magenta'}>                                        
                                             {x.region} - {x.province} - {x.commune} ({x.porcent}%)
                                         </Tag>
                                     </Col>)

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Row, Col, Input, 
         Button, Checkbox, Typography,
         notification } from 'antd'
@@ -26,6 +26,7 @@ const EcologicImpact = () => {
         renewableEnergy: false,
         carbonFootprint: false,
         waterFootprint: false,
+        wasteEnds: false,
         environmentalImpactActivity: false
     }
 
@@ -52,96 +53,147 @@ const EcologicImpact = () => {
         }
     }
 
+    useEffect(() => {
+        let mana_plan = false
+        let renewal = false
+        let carbon = false
+        let hydrica = false
+        let activity = false
+        let wasend = false
+
+        if(state.management_plan_accounts){
+            mana_plan = true
+        }
+        if(state.renewable_energy){
+            renewal = true
+        }
+        if(state.carbon_footprint){
+            carbon = true
+        }
+        if(state.hydrica_footprint){
+            hydrica = true
+        }
+        if(state.impact_activities){
+            activity = true
+        }
+        if(state.waste_ends){
+            wasend = true
+        }
+
+        setField({...field, 
+            managementPlan: mana_plan, 
+            renewableEnergy: renewal,
+            carbonFootprint: carbon,
+            waterFootprint: hydrica, 
+            environmentalImpactActivity: activity,
+            wasteEnds: wasend,
+        }) 
+    }, [])
 
     return(
             <Row>
                 <Col span={8} style={styles.col}>
                     <div style={styles.containerField}>
-                        <Paragraph>Cuentas con un plan de manejo de tus residuos</Paragraph>
-                        {state.management_plan_accounts &&
-                            <Paragraph mark>{state.management_plan_accounts}</Paragraph>
-                        }
+                        <Paragraph>Cuentas con un plan de manejo de tus residuos</Paragraph>                        
                             <Checkbox onChange={(e)=> {  
                                 if(e.target.checked) {
                                     setField({...field, managementPlan: true})
                                 }else{
                                     setField({...field, managementPlan: false})
-                                }}} /> SI
-                                    {field.managementPlan && 
-                                        <Input style={styles.input} placeholder='Describe...' 
+                                }}} checked={field.managementPlan} /> SI                                    
+
+                            <Checkbox onChange={(e)=> {                                  
+                                    setField({...field, managementPlan: false})
+                                    setData({...data, management_plan_accounts:'' })}
+
+                                } checked={!field.managementPlan} /> NO
+
+                            {field.managementPlan && 
+                                <Input style={styles.input} placeholder='Describe...' 
+                                    defaultValue={state.management_plan_accounts}
                                             onChange={(e)=> setData({...data, management_plan_accounts:e.target.value })} />}
                     </div>
                     <div style={styles.containerField}>
                         <Paragraph>Conoces la huella de carbono de tu negocio</Paragraph>
-                        {state.carbon_footprint && 
-                            <Paragraph mark>{state.carbon_footprint}</Paragraph>
-                        }
                             <Checkbox onChange={(e)=> {
                                 if(e.target.checked) {
                                     setField({...field, carbonFootprint: true})
                                 }else{
                                     setField({...field, carbonFootprint: false})
-                                }}} /> SI
+                                }}} checked={field.carbonFootprint}  /> SI
+
+                            <Checkbox onChange={(e)=> {
+                                    setField({...field, carbonFootprint: false})
+                                    setData({...field, carbon_footprint: ''})
+                                }} checked={!field.carbonFootprint}  /> NO
                                     {field.carbonFootprint && 
                                             <Input style={styles.input}  placeholder='Describe...'
+                                                defaultValue={state.carbon_footprint}
                                                 onChange={(e)=> setData({...data, carbon_footprint:e.target.value })} />}
                     </div>
                 </Col>
                 <Col span={8} style={styles.col} name='values'>
                     <div style={styles.containerField}>
-                        <Paragraph>Usas energías renovables en tu emprendimiento</Paragraph>
-                        {state.renewable_energy && 
-                            <Paragraph mark>{state.renewable_energy}</Paragraph>
-                        }
+                        <Paragraph>Usas energías renovables en tu emprendimiento</Paragraph>                        
                             <Checkbox onChange={(e)=> {  
                                 if(e.target.checked) {
                                     setField({...field, renewableEnergy: true})
                                 }else{
                                     setField({...field, renewableEnergy: false})
-                                }}} /> SI
+                                }}} checked={field.renewableEnergy} /> SI
+
+                            <Checkbox onChange={(e)=> {  
+                                    setField({...field, renewableEnergy: false})
+                                    setData({...data, renewable_energy: ''})
+                                }} checked={!field.renewableEnergy} /> NO
+
                                     {field.renewableEnergy && 
                                             <Input style={styles.input} placeholder='Describe...'
-                                                onChange={(e)=> setData({...data, renewable_energy:e.target.value })} />}
+                                            defaultValue={state.renewable_energy}
+                                                onChange={(e)=> {                                                    
+                                                    setData({...data, renewable_energy:e.target.value })
+                                                }} />}
                     </div>
                     <div style={styles.containerField}>
                         <Paragraph>Conoces la huella de hidrica de tu negocio</Paragraph>
-                        {state.hydrica_footprint && 
-                            <Paragraph mark>{state.hydrica_footprint}</Paragraph>
-                        }
                             <Checkbox onChange={(e)=> {
                                 if(e.target.checked) {
                                     setField({...field, waterFootprint: true})
                                 }else{
                                     setField({...field, waterFootprint: false})
-                                }}} /> SI
+                                }}} checked={field.waterFootprint} /> SI
+                            <Checkbox onChange={(e)=> {
+                                setField({...field, waterFootprint: false})
+                                setData({...data, hydrica_footprint: ''})
+                                }} checked={!field.waterFootprint} /> NO
                                     {field.waterFootprint && 
                                             <Input style={styles.input} placeholder='Describe...' 
+                                                defaultValue={state.hydrica_footprint}
                                                 onChange={(e)=>setData({...data, hydrica_footprint: e.target.value})}/>}
                     </div>
                 </Col>
                 <Col span={6} style={styles.col}>
                     <div style={styles.containerField}>
-                        <Paragraph>Dónde terminan los desechos de tu negocio</Paragraph>
-                        {state.waste_ends && 
-                            <Paragraph mark>{state.waste_ends}</Paragraph>
-                        }
-                            <TextArea rows='5' onChange={(e)=> setData({...data, waste_ends: e.target.value})} />
+                        <Paragraph>Dónde terminan los desechos de tu negocio</Paragraph>                        
+                            <TextArea defaultValue={state.waste_ends} rows='5' onChange={(e)=> setData({...data, waste_ends: e.target.value})} />
                     </div>                                                        
                 </Col>
                 <Col span={12}>
                     <div style={styles.containerField}>
                         <Paragraph>Has participado en alguna actividad relacionada a mejorar el impacto ambiental de tu negocio y/o del  territorio que opera tu negocio?</Paragraph>
-                        {state.impact_activities && 
-                            <Paragraph mark>{state.impact_activities}</Paragraph>
-                        }
                             <Checkbox onChange={(e)=> {
                                 if(e.target.checked) {
                                     setField({...field, environmentalImpactActivity: true})
                                 }else{
                                     setField({...field, environmentalImpactActivity: false})
-                                }}} /> SI
+                                }}} checked={field.environmentalImpactActivity} /> SI
+                            <Checkbox onChange={(e)=> {                                
+                                    setField({...field, environmentalImpactActivity: false})
+                                    setData({...data, impact_activities: ''})
+                                }} checked={!field.environmentalImpactActivity} /> NO
                                     {field.environmentalImpactActivity && 
                                             <Input style={styles.input} placeholder='Describe...' 
+                                                defaultValue={state.impact_activities}
                                                 onChange={(e)=>setData({...data, impact_activities: e.target.value})}/>}
                     </div>
                 </Col>

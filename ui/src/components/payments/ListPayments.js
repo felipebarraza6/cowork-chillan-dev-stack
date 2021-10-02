@@ -3,6 +3,7 @@ import { Table, Typography, Row,
         Col, Button } from 'antd'
 import { ListPaymentsAction } from '../../actions/payments/ActionPayments'
 import { columns } from './columns'
+
 const { Title } = Typography
 
 const ListPayments = ({type_data}) => {
