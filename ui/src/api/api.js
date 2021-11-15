@@ -2,7 +2,7 @@ import { notification } from 'antd'
 
 import axios from 'axios'
 
-export const BASE_URL = 'http://localhost:8000/'
+export const BASE_URL = 'http://app.coworkchillan.cl:8000/'
 
 const token = JSON.parse(localStorage.getItem('access_token') || null)
 
