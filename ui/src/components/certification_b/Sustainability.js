@@ -49,18 +49,24 @@ const Sustainability = () => {
     return(
             <Row>
                 <Col span={8} style={styles.col}>
+                    
                     <div style={styles.container}>
                         <Text>Escribe el Propósito de tu negocio.</Text>
-                        {state.purpose && 
-                            <TextArea rows='4' 
-                                defaultValue={state.purpose} 
-                                onChange={e=>setData({...data, purpose: e.target.value})} />}
+                            {state.purpose &&
+                                <TextArea rows='4' 
+                                    defaultValue={state.purpose} 
+                                    onChange={e=>setData({...data, purpose: e.target.value})} />}
+                            {!state.purpose && <TextArea rows='4'                                     
+                                    onChange={e=>setData({...data, purpose: e.target.value})} />} 
                     </div>
                     <div style={styles.container}>
                         <Text>Qué beneficios socioambientales les entregas a tus clientes a través de tu negocio.</Text>
                         {state.socio_environmental_benefits && 
                             <TextArea rows='4' 
                                 defaultValue={state.socio_environmental_benefits}
+                                onChange={ e =>setData({...data, socio_environmental_benefits: e.target.value})} />}
+                        {!state.socio_environmental_benefits && 
+                            <TextArea rows='4' 
                                 onChange={ e =>setData({...data, socio_environmental_benefits: e.target.value})} />}
                     </div>
                 </Col>       
@@ -71,12 +77,18 @@ const Sustainability = () => {
                             <TextArea rows='4'
                                 defaultValue={state.vision}    
                                 onChange = { e =>setData({...data, vision: e.target.value})} />}
+                        {!state.vision && 
+                            <TextArea rows='4'
+                                onChange = { e =>setData({...data, vision: e.target.value})} />}
                     </div>
                     <div style={styles.container}>
                         <Text>Como podemos ayudar a mejorar el impacto sostenible de tu negocio.</Text>
                         {state.how_help_you && 
                             <TextArea rows='4'
                                 defaultValue={state.how_help_you}
+                                onChange = { e =>setData({...data, how_help_you: e.target.value})} />}
+                        {!state.how_help_you && 
+                            <TextArea rows='4'                                
                                 onChange = { e =>setData({...data, how_help_you: e.target.value})} />}
                     </div>
                 </Col>        
@@ -87,6 +99,9 @@ const Sustainability = () => {
                             <TextArea rows='4'
                                 defaultValue={state.your_values}
                                 onChange = { e =>setData({...data, your_values: e.target.value})} />}
+                        {!state.your_values && 
+                            <TextArea rows='4'                          
+                                onChange = { e =>setData({...data, your_values: e.target.value})} />}
                         
                     </div>
                     <div style={styles.container}>
@@ -94,6 +109,9 @@ const Sustainability = () => {
                         {state.link_to_you && 
                             <TextArea rows='4'
                                 defaultValue={state.link_to_you}
+                                onChange = { e =>setData({...data, link_to_you: e.target.value})} />}
+                        {!state.link_to_you && 
+                            <TextArea rows='4'                        
                                 onChange = { e =>setData({...data, link_to_you: e.target.value})} />}
                     </div>
                 </Col>
@@ -103,6 +121,9 @@ const Sustainability = () => {
                         {state.you_have_certification && 
                             <TextArea rows='4'
                                 defaultValue={state.you_have_certification}
+                                onChange = { e =>setData({...data, you_have_certification: e.target.value})} />}
+                        {!state.you_have_certification && 
+                            <TextArea rows='4'                                
                                 onChange = { e =>setData({...data, you_have_certification: e.target.value})} />}
                         
                     </div>

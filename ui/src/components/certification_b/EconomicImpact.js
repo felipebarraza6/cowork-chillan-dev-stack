@@ -378,9 +378,11 @@ const EconomicImpact = () => {
                                     <Input placeholder='Monto (CLP)' onChange={(e)=>setField({...field, txtAmount:e.target.value})} />
                                 </Col>
                                 <Col span={24}>
+                                    {field.listYears && <>
                                     {field.listYears.map((x,index)=>{
                                         return(<Tag key={index} style={styles.tag} color={'gold'}> {x.slice(0,4)} - ${formatNumber.new(x.slice(6))} </Tag>)
                                     })}
+                                    </>}
                         </Col>                                                        
                         <Col>
                             <Button style={{marginTop:'10px'}} icon={<PlusCircleOutlined />} onClick={(value)=> {
@@ -415,17 +417,19 @@ const EconomicImpact = () => {
                                 <Col span={12}>
                                     Elige el primer valor
                                     <Select placeholder='Selecciona un valor...' onChange={(value)=>setField({...field, valueCalculate1: value, valueNumberCal1: parseInt(value.slice(7))})}>
+                                    {field.listYears && <>
                                     {field.listYears.map((x, index)=>{
                                         return(<Select.Option key={index} value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
-                                    })}
+                                    })}</>}
                                     </Select>
                                 </Col> 
                                 <Col span={12}>
                                     Elige el segundo valor
                                     <Select placeholder='Selecciona un valor...' onChange={(value)=>setField({...field, valueCalculate2: value, valueNumberCal2: parseInt(value.slice(7))})}>
+                                    {field.listYears && <>
                                     {field.listYears.map((x, index)=>{
                                         return(<Select.Option  key={index} value={x}>{x.slice(0,4)} - ${formatNumber.new(x.slice(6))}</Select.Option>)
-                                    })}
+                                    })}</>}
                                     </Select>
                                 </Col>
                                 <Col span={24}>
