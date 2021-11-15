@@ -57,4 +57,4 @@ class PaymentViewSet(viewsets.GenericViewSet,
         if(self.action == 'list'):
             return ListPaymentModelSerializer
         else:
-            PaymentModelSerializer
+            return PaymentModelSerializer

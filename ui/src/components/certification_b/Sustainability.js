@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 
 import { Col, Row, Input, 
-        Button, Typography, notification } from 'antd'
+        Button, Typography, notification, Checkbox } from 'antd'
 import { FormContext } from './FormUpdate.js'
 import clients from '../../api/clients/endpoints'
 
@@ -12,14 +12,16 @@ const { Text, Paragraph } = Typography
 const Sustainability = () => {
     
     const { state } = useContext(FormContext)
-
+    console.log(state.you_have_certification)
     const dataState = {
         purpose: null,
         vision: null,
         your_values: null,
         socio_environmental_benefits: null,
         how_help_you: null,
-        link_to_you: null
+        link_to_you: null,
+        you_have_certification: null,
+        cowork_provider: false,
     }    
 
     const [data, setData] = useState(dataState)
@@ -95,6 +97,33 @@ const Sustainability = () => {
                                 onChange = { e =>setData({...data, link_to_you: e.target.value})} />}
                     </div>
                 </Col>
+                <Col span={12} style={styles.col}>
+                    <div style={styles.container}>
+                        <Text>Describe si tienes alguna certificacion</Text>
+                        {state.you_have_certification && 
+                            <TextArea rows='4'
+                                defaultValue={state.you_have_certification}
+                                onChange = { e =>setData({...data, you_have_certification: e.target.value})} />}
+                        
+                    </div>
+                    </Col>
+                    <Col span={12} justify="center" style={{marginTop:'50px'}}>
+                    <div style={styles.container}>
+                        <Text style={{marginRight:'5px'}}>Eres proveedor de cowork chillan?</Text>
+                            
+                            {state.cowork_provider ? <>SI</>:<>NO</>}
+                            <Checkbox style={{marginLeft:'15px'}} onChange={(x)=> { 
+                                if(x.target.checked){
+                                    setData({...data, cowork_provider: true})
+                                }else{
+                                    setData({...data, cowork_provider: false}) 
+                                }
+                             }} />
+                    
+                        
+                    </div>
+                    </Col>
+                
                 <Col span={24} style={styles.btn}>
                     <Button type='primary' onClick={()=>updateCertb(data)} >Guardar Sustentabilidad</Button>
                 </Col>

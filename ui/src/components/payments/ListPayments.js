@@ -1,74 +1,98 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table, Typography, Row,
         Col, Button } from 'antd'
 import { ListPaymentsAction } from '../../actions/payments/ActionPayments'
 import { columns } from './columns'
+import AddSpeding from './AddSpeding'
+import { PaymentsContext } from '../../containers/Payments'
 
 const { Title } = Typography
 
-const ListPayments = ({type_data}) => {
+const ListPayments = () => {
 
-    const initialState = {
-        payments: [],
-        page: 1,
-        is_speding: false        
-    }
-    const [data, setData] = useState([])
+    const { state, dispatch } = useContext(PaymentsContext)    
+    const [loading, setLoading] = useState(false)    
 
-    const [local, setLocal] = useState(initialState)
-    const [loading, setLoading] = useState(false)
 
-    const getPayments = async(is_speding) => {
+    const getPayments = async(is_speding, page) => {
         setLoading(true)
         try {
-            const request = await ListPaymentsAction(is_speding)
-            
-            setData(request.data.results)            
+            const request = await ListPaymentsAction(is_speding, page, dispatch)                          
             setLoading(false)
             return request
         } catch (err) {
             setLoading(false)
             console.log(err)
         }
-    }
-    
-
-    
+    }        
 
     useEffect(() => {
-        getPayments(false)
+        getPayments(false, state.page)
     }, [])
 
-    return(
+
+    return(<> 
         <Table 
-            columns={columns}    
-            loading={loading}            
+            columns={columns(state, dispatch)}    
+            loading={loading}  
+            rowKey='id'          
             title={()=> {            
             return(<Row>
                 <Col span={12}>
-                    {local.is_speding ? <Title level={3}>Gastos</Title>:<Title level={3}>Pagos</Title> }
+                    {state.is_speding ? <Title level={3}>Gastos</Title>:<Title level={3}>Pagos</Title> }
                 </Col>
                 <Col style={styles.colBtn} span={12}>
-                        <Button style={{marginRight:'10px'}} onClick={()=> {                         
-                        }} type='primary'>(+) Agregar pago</Button>
-                    {local.is_speding ? 
+                        
+                    {state.is_speding ? <>
+                        <AddSpeding />
                         <Button onClick={()=> {
-                            setLocal({...local, is_speding: false})
-                            getPayments(false)
+                            dispatch({
+                                type:'IS_NOT_SPEADING'
+                            })                           
+                            dispatch({
+                                type: 'CHANGE_PAGE',
+                                page: 1
+                            })
+                            getPayments(false, 1)
+
                         }} type='primary'>Ver pagos</Button>
-                        :
-                        <Button onClick={()=> {
-                            setLocal({...local, is_speding: true})
-                            getPayments(true)
+                        </> 
+                        :<>
+                        <Button style={{marginRight:'10px'}} onClick={()=> {                            
+                            getPayments(state.is_speding, 1)
+                        }} type='primary'>Actualizar</Button>
+                        <Button onClick={()=> {                            
+                            dispatch({
+                                type:'IS_SPEADING'
+                            })
+                            dispatch({
+                                type: 'CHANGE_PAGE',
+                                page: 1
+                            })
+                            getPayments(true, 1)
                         }} type='primary'>Ver costos</Button>    
+                        </>
                     }
                 </Col>
 
             </Row>)
         }}
         bordered
-        dataSource={data}        
+        dataSource={state.payments}        
+        pagination={{
+            total:state.count,
+            current: state.page,
+            onChange: (x)=> {
+                dispatch({
+                    type: 'CHANGE_PAGE',
+                    page: x
+                })
+                getPayments(state.is_speding, x)
+            }           
+            
+        }}
         />
+        </>
     )
 }
 

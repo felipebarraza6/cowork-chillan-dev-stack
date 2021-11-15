@@ -9,7 +9,7 @@ const { Title } = Typography
 
 const ModalAddPaymentForMembership = ({ membership }) => {
 
-
+    
     const [visible, setVisible] = useState(false)
     const [list, setList] = useState([])
 
@@ -18,11 +18,12 @@ const ModalAddPaymentForMembership = ({ membership }) => {
         method: null,
         bank_account: null,
         amount: null,
-        description: null,
+        description: '',
         is_invoice: false,
         is_ticket: false,
         comprobant_file: null,                                                        
     })
+
 
         
     useEffect(() => {
@@ -53,6 +54,7 @@ const ModalAddPaymentForMembership = ({ membership }) => {
         }
     }
 
+    
     return(<>
         <Modal visible={visible} 
             onCancel={()=> {
@@ -89,7 +91,7 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                         Cuenta Bancaria
                         </Title>
                         <Select style={styles.select} placeholder="Selecciona una opcion"
-                            onChange = {(txt)=> {
+                            onChange = {(txt)=> {                                
                                 setData({
                                     ...data,
                                     bank_account: txt 

@@ -25,6 +25,7 @@ function App() {
     const access_token = JSON.parse(localStorage.getItem('access_token') || null)
     const user = JSON.parse(localStorage.getItem('user') || null)
 
+
     if(user && access_token){
       dispatch({
         type: 'LOGIN',

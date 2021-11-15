@@ -91,6 +91,7 @@ class BusinessListSerializer(serializers.ModelSerializer):
         model = Business
         fields = (
             'id',                             
+            'fantasy_name',
             'business_name',
             'dni_business',
             'business_heading',

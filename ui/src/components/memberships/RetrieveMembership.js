@@ -130,7 +130,14 @@ const RetrieveMembership = ({obj}) => {
                 <Descriptions.Item label='Tiempo restante'>
                     {obj &&
                         <>
-                            {Math.round(diff_days)} Dias de membresia
+                            {Math.sign(diff_days) != -1 ?
+                                <>
+                                    {Math.round(diff_days)} Dias de membresia   
+                                </>:
+                                <>
+                                    Periodo completado
+                                </>
+                            }                            
                         </>
                     }
                 </Descriptions.Item>

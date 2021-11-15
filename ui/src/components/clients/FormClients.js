@@ -94,7 +94,6 @@ const FormClients = ({
                 
             </>
             }
-            
             <Row style={{marginTop: '55px'}}>                
                 <Col span={8} style={{paddingRight:'5px'}}>                    
                     <Form.Item name='first_name'
@@ -114,6 +113,11 @@ const FormClients = ({
                     <Form.Item name="second_surname">
                         <Input placeholder="Segundo Apellido" maxLength={20} />
                     </Form.Item>
+                </Col>
+                <Col span={24}>
+                    <Form.Item name="fantasy_name">
+                        <Input placeholder="Nombre fantasia" maxLength={20} />
+                    </Form.Item> 
                 </Col>
                 {!initial ? 
                 <Col span={8} style={{paddingRight:'5px'}}>

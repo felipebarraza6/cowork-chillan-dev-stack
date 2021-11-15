@@ -70,10 +70,6 @@ class MembershipViewSet(viewsets.GenericViewSet,
     @action(detail=True, methods=['post'])
     def add_payment(self, request, *args, **kwargs):
          membership = self.get_object()
-         Membership.objects.filter(id=membership.id).update(
-                        payment_amount = membership.payment_amount + request.data['amount']
-                    )
-
          instaince_bank = BankAccount.objects.filter(id=request.data['bank']).first()
 
          Payment.objects.create(bank_account=instaince_bank, 

@@ -34,6 +34,7 @@ class ReportLegalRepresentSrializer(serializers.ModelSerializer):
         model = Client
         fields = (
             'first_name',
+            'fantasy_name',
             'surname',
             'second_surname',
             'dni',
@@ -54,6 +55,7 @@ class ReportNaturalPersonSerializer(serializers.ModelSerializer):
         model = Client
         fields = (
             'business_heading',
+            'fantasy_name',
             'turn',
             'dni',
             'region',
@@ -93,6 +95,7 @@ class ClientModelSerializer(serializers.ModelSerializer):
         model = Client
         fields = (
             'id',
+            'fantasy_name',
             'first_name',
             'surname',
             'second_surname',

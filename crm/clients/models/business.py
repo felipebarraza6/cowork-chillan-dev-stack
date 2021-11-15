@@ -11,6 +11,7 @@ class Business(ApiModel):
     
     business_name = models.CharField(max_length=70, blank=False, null=False)
     dni_business = models.CharField(max_length=12, blank=False, null=False, unique=True)
+    fantasy_name = models.CharField(max_length=120, blank=True, null= True)
     business_heading = models.CharField(max_length=120, blank=True, null=True)
     turn = models.TextField(max_length=500, blank=True, null=True)
 

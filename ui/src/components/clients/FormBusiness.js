@@ -114,12 +114,19 @@ const FormBusiness = ({
                                 }} maxLength={10} minLength={9} />
                         </Form.Item>    
                     }
-                </Col>           
-                <Col span={24} >
+                </Col>                           
+                <Col span={12} style={{paddingRight:'5px'}}>
+                    <Form.Item name="fantasy_name">
+                        <Input placeholder="Nombre Fantasia" maxLength={40} />
+                    </Form.Item>
+                </Col>
+                <Col span={12} style={{paddingLeft:'5px'}} >
                     <Form.Item name="business_heading">
                         <Input placeholder="Rubro Comercial" maxLength={40} />
-                    </Form.Item>
-                    <Form.Item name="turn">
+                    </Form.Item>                    
+                </Col>
+                <Col span={24}>
+                <Form.Item name="turn">
                         <TextArea placeholder="Giros" maxLength={500} />
                     </Form.Item>
                 </Col>

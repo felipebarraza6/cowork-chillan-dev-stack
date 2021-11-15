@@ -7,6 +7,7 @@ import { PlusCircleOutlined} from '@ant-design/icons'
 
 import { FormContext } from './FormUpdate.js'
 import clients from '../../api/clients/endpoints'
+import ModalLinkedYou from './ModalLinkedYou'
 
 const { TextArea } = Input
 const { Text, Paragraph } = Typography
@@ -30,6 +31,7 @@ const EconomicImpact = () => {
         protectionLaw: '',
         isEconomicHelp: false,
         economicsHelps: '',
+        linked_enterprises: [],
         listYears: [],
         txtYear: '',
         txtAmount: '',
@@ -50,6 +52,7 @@ const EconomicImpact = () => {
         workers_employment_law: null, 
         benefits_financial_aid: null, 
         linked_entrepreneur: null, 
+        linked_enterprises: [],
         years_payment_vat: []
     }
     const [data, setData] = useState(initialData)
@@ -95,6 +98,7 @@ const EconomicImpact = () => {
         if(state.linked_entrepreneur){
             islinktoyou = true
         }
+        
 
         setField({
             ...field,
@@ -104,7 +108,7 @@ const EconomicImpact = () => {
             isEconomicHelp: iseconomichelp,
             hasLinkedYou: islinktoyou         
         })
-        setData({...data, years_payment_vat: yearsList})
+        setData({...data, years_payment_vat: yearsList, linked_enterprises: state.linked_enterprises})
 
     }, [])
     
@@ -356,9 +360,12 @@ const EconomicImpact = () => {
                             setField({...field, hasLinkedYou: false})
                         }} checked={!field.hasLinkedYou} /> NO
 
-                        {field.hasLinkedYou && <TextArea rows={4} defaultValue={state.linked_entrepreneur} style={styles.input} placeholder={'Describe...'} 
-                            onChange={(e)=> setData({...data, linked_entrepreneur: e.target.value})}
-                        />}
+                        {field.hasLinkedYou && <>
+                            <ModalLinkedYou oldData={data} setEconomic={setData} />
+                            <TextArea rows={4} defaultValue={state.linked_entrepreneur} style={styles.input} placeholder={'Describe...'} 
+                                onChange={(e)=> setData({...data, linked_entrepreneur: e.target.value})}
+                            />
+                        </>}
                     </div>
                     <Text>ventas acumuladas por año (1 de enero al 31 de diciembre), debes incluir el año respectivo y el valor en pesos chilenos</Text>
                     <Row style={{marginTop:'10px', marginBottom:'20px'}}>                        

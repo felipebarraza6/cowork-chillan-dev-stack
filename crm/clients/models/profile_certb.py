@@ -66,7 +66,9 @@ class ProfileCertb(ApiModel):
     socio_environmental_benefits = models.TextField(max_length=800, blank=True, null=True)
     how_help_you = models.TextField(max_length=800, blank=True, null=True)
     link_to_you = models.TextField(max_length=800, blank=True, null=True)
-
+    you_have_certification = models.TextField(max_length=800, blank=True, null=True)
+    cowork_provider = models.BooleanField(default=False) 
+    
     # Economic Impact
     accumulated_sales = models.CharField(max_length=800, blank=True, null=True)
     previust_costs = models.CharField(max_length=800, blank=True, null=True)
@@ -75,6 +77,7 @@ class ProfileCertb(ApiModel):
     workers_employment_law = models.TextField(max_length=800, blank=True, null=True)
     benefits_financial_aid = models.TextField(max_length=800, blank=True, null=True)
     linked_entrepreneur = models.TextField(max_length=800, blank=True, null=True)
+    linked_enterprises = models.JSONField(blank=True, null=True)
     years_payment_vat = models.JSONField(blank=True, null=True)
 
     # Social Impact

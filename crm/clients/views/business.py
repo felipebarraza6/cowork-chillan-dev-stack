@@ -54,5 +54,3 @@ class BusinessViewSet(viewsets.GenericViewSet,
         else:
             return BusinessModelSerializer
     
-
-
