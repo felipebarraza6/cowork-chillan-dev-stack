@@ -21,7 +21,7 @@ const ListMemberships = ({ dataMemberships, dispatch }) => {
     const filtersOptions = {
         is_finish: '',
         is_renovation: '',
-        is_active: 'true',
+        is_active: '',
         person_dni: '',
         business_dni: '',
         month: null
@@ -85,7 +85,10 @@ const ListMemberships = ({ dataMemberships, dispatch }) => {
                 </span>
                 <Select style={{marginRight:'10px'}} 
                     placeholder={'Filtro por año...'} >
-                    <Option>2021</Option>
+                    <Option value='2020'>2020</Option>
+                    <Option value='2021'>2021</Option>
+                    <Option value='2022'>2022</Option>
+
                 </Select>
                 <span style={{marginRight:'10px'}}>
                 MES:

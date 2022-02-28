@@ -1,6 +1,6 @@
 import React, { useState ,useContext } from 'react'
 import { Button, Tag, Col, Row,
-        Typography, Modal, Input } from 'antd'
+        Typography, Modal, Input, Badge } from 'antd'
 import { updateMembership, updateFileMembership } from '../../actions/memberships/UpdateMembership'
 import {MembershipContext} from '../../containers/Memberships'
 import ListPayments from './Payments/ListPayments'
@@ -14,6 +14,9 @@ var type_user = ''
 if(user){
     type_user = user.type_user
 }
+
+var today = new Date()
+var fomat_date = today.toISOString()
 
 const ButtonUpdate = (obj) => {
 
@@ -105,14 +108,14 @@ const ModalDeactivateMembership = ({obj}) => {
 
 
 export const columns = [
-
+    
 
     {
         key:'id',
         title:'Cliente',
         render: (obj) => <>
             {obj.is_enterprise ? <Paragraph ellipsis> 
-                {obj.client_business.business_name} </Paragraph> :<Paragraph ellipsis > 
+                {obj.client_business.business_name.slice(0,15)}... </Paragraph> :<Paragraph ellipsis > 
                 {obj.client_person ? <>{obj.client_person.first_name} {obj.client_person.surname}</>: <>{console.log(obj)}</> }
                 </Paragraph>}
         </>
@@ -134,14 +137,21 @@ export const columns = [
     {
         key: 'id',
         title: 'Etiquetas',
-        render: (obj) => <Row>
+        render: (obj) => { 
+            var date_pro = new Date(obj.date_finish)
+            var date_rest_days = date_pro.setDate(today.getDate - 35)
+            return(<><Row style={{marginBottom:'50px'}}>
+            <Col span={24}>
+                {obj.date_finish > fomat_date ? <Badge.Ribbon color={'red'} text="CADUCADO" />:<Badge.Ribbon color={'green'} text="ACTIVO" />}
+                {date_rest_days < fomat_date && <Badge.Ribbon color={'yellow'} text="POR CADUCAR" />}                 
+            </Col></Row><Row>
             <Tag style={styles.tag} color='cyan'>{obj.valoration.get_service}</Tag>
             {obj.is_active && <Col span={24}><Tag style={styles.tag} color='blue'>Activo</Tag></Col>}
             {obj.is_finish && <Col span={24}><Tag style={styles.tag} color='gold' >Finalizado</Tag></Col>}
             {obj.is_renovation && <Col span={24}><Tag style={styles.tag} color='purple'>Renovacion</Tag></Col>}
             {obj.paid_out ? <Col span={24}><Tag style={styles.tag} color='green'>Total pagado</Tag></Col>:<Col span={24}><Tag style={styles.tag} color='magenta'>Total impago</Tag></Col>}
             {obj.is_cancel && <Col span={24}><Tag style={styles.tag} color='volcano'>Cancelado</Tag></Col>}
-        </Row>
+        </Row></>)}
     },
     {
         key:'id',
@@ -166,11 +176,15 @@ export const columns = [
             </Col>
 
             <Col span={24}>
-                <ListPayments obj={obj} />                
+                <ListPayments obj={obj} />    
+                <Button style={{marginLeft:'10px'}}>(+) Agregar Pago</Button>
                 {obj.is_active & !obj.paid_out ? 
                     <><Row>
                         <Col span={24}>
                         <ModalAddPaymentForMembership membership={obj} />
+                        </Col>
+                        <Col span={24}>
+                            <Button>(+) Agregar</Button>
                         </Col>
                         <Col span={24}>
                         <ModalDeactivateMembership obj={obj} />

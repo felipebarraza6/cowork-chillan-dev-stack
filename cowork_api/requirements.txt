@@ -14,3 +14,4 @@ django-cors-headers
 django-timedeltafield
 django-filter
 django-import-export
+drf_renderer_xlsx

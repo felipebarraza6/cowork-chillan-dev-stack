@@ -29,7 +29,7 @@ const Memberships = () => {
             }}
         >
         <Row>
-            <Col span={14} >
+            <Col span={16} >
                 {!state.retrieve_membership ? 
                 <ListMemberships 
                     dataMemberships={state.memberships}
@@ -37,7 +37,7 @@ const Memberships = () => {
                     <RetrieveMembership obj={state.membershipSelected.obj} />
                 }
             </Col>
-            <Col span={10} >
+            <Col span={8} >
                 <CreateMemberships />
             </Col>
         </Row>
