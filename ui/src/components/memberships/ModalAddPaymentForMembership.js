@@ -20,6 +20,7 @@ const ModalAddPaymentForMembership = ({ membership }) => {
         amount: null,
         description: '',
         is_invoice: false,
+        is_pay: true,
         is_ticket: false,
         comprobant_file: null,                                                        
     })
@@ -45,11 +46,13 @@ const ModalAddPaymentForMembership = ({ membership }) => {
 
     const postData = async() => {
         try {
-            const request = await payments.addPaymemtForMembership(data)
-            notification.success({message:'PAGO INGRESADO :)'})
-            setVisible(false)
+            const request = await payments.addPaymemtForMembership(data).then((r)=> {
+                notification.success({message:'PAGO INGRESADO :)'})
+                setVisible(false)
+            })            
             return request
         } catch(e) {
+            notification.error({message:'REVISA TUS DATOS'})
             console.log(e)
         }
     }
@@ -79,10 +82,10 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                                 Transferencia
                             </Select.Option>
                             <Select.Option value='Debito'>
-                                Debito
+                                Tarjeta de Debito
                             </Select.Option>
                             <Select.Option value='Credito'>
-                                Credito
+                                Tarjeta de Credito
                             </Select.Option>
                         </Select>
                     </Col>
@@ -134,8 +137,12 @@ const ModalAddPaymentForMembership = ({ membership }) => {
                             })
                         }} /> BOLETA
                     </Col>
-                    <Col span={24}>
-                        <Title level={4} style={styles.txt2}>Subir archivo(factura o boleta)</Title>
+                    <Col span={12}>
+                        <Title level={4} style={styles.txt2}>Subir comprobante</Title>
+                        <input type="file" id="myFile" name="filename" onChange={changeHandler} accept="application/pdf,application/vnd.ms-excel" />
+                    </Col>
+                    <Col span={12}>
+                        <Title level={4} style={styles.txt2}>Subir facturra</Title>
                         <input type="file" id="myFile" name="filename" onChange={changeHandler} accept="application/pdf,application/vnd.ms-excel" />
                     </Col>
                 </Row>
@@ -150,7 +157,7 @@ const ModalAddPaymentForMembership = ({ membership }) => {
 
 const styles = {
     btn: {
-        marginBottom: '10px'
+        margin: '10px'
     },
     txt: {
         textAlign: 'center'

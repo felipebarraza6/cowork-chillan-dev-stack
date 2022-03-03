@@ -14,6 +14,7 @@ var type_user = ''
 if(user){
     type_user = user.type_user
 }
+//INVERTIR FECHAS DE CADUCADOS CUANDO LA FECHA HOY ES SUPERIOR A LA FECHA DE TERMINO DEBE MARCAR CADUCADO
 
 var today = new Date()
 var fomat_date = today.toISOString()
@@ -142,9 +143,11 @@ export const columns = [
             var date_rest_days = date_pro.setDate(today.getDate - 35)
             return(<><Row style={{marginBottom:'50px'}}>
             <Col span={24}>
-                {obj.date_finish > fomat_date ? <Badge.Ribbon color={'red'} text="CADUCADO" />:<Badge.Ribbon color={'green'} text="ACTIVO" />}
-                {date_rest_days < fomat_date && <Badge.Ribbon color={'yellow'} text="POR CADUCAR" />}                 
-            </Col></Row><Row>
+                {obj.date_finish < fomat_date ? <Badge.Ribbon color={'red'} text="CADUCADO" />:<Badge.Ribbon color={'green'} text="ACTIVO" />}
+                
+            </Col><Col span={24}>
+                    {date_rest_days < fomat_date && <Badge.Ribbon color={'yellow'} text="POR CADUCAR" />}                 
+                </Col></Row><Row>
             <Tag style={styles.tag} color='cyan'>{obj.valoration.get_service}</Tag>
             {obj.is_active && <Col span={24}><Tag style={styles.tag} color='blue'>Activo</Tag></Col>}
             {obj.is_finish && <Col span={24}><Tag style={styles.tag} color='gold' >Finalizado</Tag></Col>}
@@ -177,7 +180,7 @@ export const columns = [
 
             <Col span={24}>
                 <ListPayments obj={obj} />    
-                <Button style={{marginLeft:'10px'}}>(+) Agregar Pago</Button>
+                <ModalAddPaymentForMembership membership={obj} />
                 {obj.is_active & !obj.paid_out ? 
                     <><Row>
                         <Col span={24}>
