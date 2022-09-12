@@ -115,10 +115,9 @@ export const columns = [
         key:'id',
         title:'Cliente',
         render: (obj) => <>
-            {obj.is_enterprise ? <Paragraph ellipsis> 
-                {obj.client_business.business_name.slice(0,15)}... </Paragraph> :<Paragraph ellipsis > 
-                {obj.client_person ? <>{obj.client_person.first_name} {obj.client_person.surname}</>: <>{console.log(obj)}</> }
-                </Paragraph>}
+             <Tag> 
+                {obj.client_business.business_name.slice(0,15)}...  
+                </Tag>
         </>
     },
     {
